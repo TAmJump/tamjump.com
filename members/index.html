@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members | TAmJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63636;
+            --primary-dark: #c41c1c;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+            --light-bg: #fafafa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: "Noto Sans JP", "Inter", sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background: var(--dark);
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(29, 29, 29, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .header-nav a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.7);
+            transition: color 0.3s;
+        }
+
+        .header-nav a:hover {
+            color: var(--primary);
+        }
+
+        /* Main Container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 6rem 2rem 2rem;
+        }
+
+        /* Login Card */
+        .login-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-badge {
+            display: inline-block;
+            background: var(--dark);
+            color: var(--white);
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .login-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-description {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            line-height: 1.8;
+        }
+
+        /* Login Form */
+        .login-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(230, 54, 54, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            display: none;
+            background: #fff0f0;
+            color: var(--primary);
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* Member Menu (shown after login) */
+        .member-menu {
+            display: none;
+        }
+
+        .member-menu.show {
+            display: block;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .menu-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-subtitle {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            margin-bottom: 1rem;
+        }
+
+        .menu-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .menu-link:hover {
+            background: #f0f0f0;
+            transform: translateX(5px);
+        }
+
+        .menu-number {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.2rem;
+            color: var(--primary);
+            width: 40px;
+        }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-text-title {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .menu-text-description {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+        }
+
+        .menu-arrow {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            margin-top: 2rem;
+            background: transparent;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            color: var(--gray-text);
+            cursor: pointer;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .logout-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Info Section */
+        .info-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .info-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 0.9rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-text {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .login-card {
+                padding: 2rem;
+            }
+
+            .main-container {
+                padding: 5rem 1rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="header-logo"><img src="../logo.png" alt="TAmJ" style="height: 32px;"></a>
+        <nav class="header-nav">
+            <a href="../home.html">Hub</a>
+            <a href="../cf-index.html">Funding</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="login-card">
+            <!-- Login Form -->
+            <div id="loginSection">
+                <div class="login-header">
+                    <span class="login-badge">MEMBERS ONLY</span>
+                    <h1 class="login-title">Member Login</h1>
+                    <p class="login-description">
+                        会員ページでは、公開できない「金融設計」「試算」「ツール」を提供しています。
+                    </p>
+                </div>
+
+                <div id="loginError" class="login-error">
+                    パスワードが正しくありません
+                </div>
+
+                <div class="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="password">合言葉（パスワード）</label>
+                        <input type="password" id="password" class="form-input" placeholder="Enter password">
+                    </div>
+                    <button type="button" id="loginBtn" class="login-btn">LOGIN</button>
+                </div>
+            </div>
+
+            <!-- Member Menu (hidden until login) -->
+            <div id="memberMenu" class="member-menu">
+                <div class="menu-header">
+                    <h2 class="menu-title">Welcome, Member</h2>
+                    <p class="menu-subtitle">以下のツールをご利用いただけます</p>
+                </div>
+
+                <ul class="menu-list">
+                    <li class="menu-item">
+                        <a href="service-development.html" class="menu-link">
+                            <span class="menu-number">01</span>
+                            <div class="menu-text">
+                                <div class="menu-text-title">開発シミュレーター</div>
+                                <div class="menu-text-description">開発費用の概算シミュレーション</div>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="service-equipment.html" class="menu-link">
+                            <span class="menu-number">02</span>
+                            <div class="menu-text">
+                                <div class="menu-text-title">什器備品ファイナンスリース</div>
+                                <div class="menu-text-description">什器・備品のリース設計ツール</div>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="estimate-development.html" class="menu-link">
+                            <span class="menu-number">03</span>
+                            <div class="menu-text">
+                                <div class="menu-text-title">開発見積（詳細）</div>
+                                <div class="menu-text-description">詳細試算・設計テンプレート</div>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="secretary.html" class="menu-link">
+                            <span class="menu-number">04</span>
+                            <div class="menu-text">
+                                <div class="menu-text-title">秘書サービス</div>
+                                <div class="menu-text-description">会員限定の秘書サポート</div>
+                            </div>
+                            <span class="menu-arrow">→</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <button type="button" id="logoutBtn" class="logout-btn">LOGOUT</button>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <p class="info-title">ABOUT MEMBERSHIP</p>
+            <p class="info-text">
+                会員限定ページでは、病院・介護村・温泉プロジェクトの「設計裏側」や、
+                金融スキームの詳細をご覧いただけます。
+                会員登録については info@tamj.jp までお問い合わせください。
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const PASSWORD = 'tamj2026';
+        
+        const loginSection = document.getElementById('loginSection');
+        const memberMenu = document.getElementById('memberMenu');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const passwordInput = document.getElementById('password');
+        const loginError = document.getElementById('loginError');
+        
+        // Check if already logged in
+        function checkLogin() {
+            if (localStorage.getItem('member') === '1') {
+                showMenu();
+            }
+        }
+        
+        // Show menu after login
+        function showMenu() {
+            loginSection.style.display = 'none';
+            memberMenu.classList.add('show');
+        }
+        
+        // Handle login
+        function handleLogin() {
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === PASSWORD) {
+                localStorage.setItem('member', '1');
+                loginError.classList.remove('show');
+                
+                // Check for redirect
+                const urlParams = new URLSearchParams(window.location.search);
+                const nextPage = urlParams.get('next');
+                
+                if (nextPage) {
+                    window.location.href = nextPage;
+                } else {
+                    showMenu();
+                }
+            } else {
+                loginError.classList.add('show');
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+        
+        // Handle logout
+        function handleLogout() {
+            localStorage.removeItem('member');
+            loginSection.style.display = 'block';
+            memberMenu.classList.remove('show');
+            passwordInput.value = '';
+        }
+        
+        // Event listeners
+        loginBtn.addEventListener('click', handleLogin);
+        logoutBtn.addEventListener('click', handleLogout);
+        
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
+        
+        // Check login on page load
+        checkLogin();
+    </script>
+</body>
+</html>

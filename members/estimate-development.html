@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <script>
+        if(localStorage.getItem("member")!=="1"){
+            location.href="index.html?next=estimate-development.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詳細見積 | DEVELOPMENT Pro | TAmJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #e63636;
+            --primary-dark: #c41c1c;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+            --off-white: #ffffff;
+            --border: #e5e7eb;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "Inter", sans-serif; line-height: 1.6; color: var(--dark); background: #ffffff; }
+        a { text-decoration: none; color: inherit; }
+
+        header { background: var(--white); padding: 0.8rem 1.5rem; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        .header-container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+        .logo { font-family: "Bebas Neue", sans-serif; color: var(--primary); font-size: 1.6rem; }
+        .logo .char-m { font-family: "Inter", sans-serif; font-weight: 300; font-size: 0.6em; }
+        .back-link { color: var(--gray-text); font-size: 0.85rem; }
+        .back-link:hover { color: var(--primary); }
+
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 80px 1.5rem 2rem; }
+        .page-header { background: linear-gradient(135deg, #e63636, #c41c1c); color: var(--white); padding: 1.5rem; border-radius: 14px; margin-bottom: 1.5rem; }
+        .member-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 20px; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.8rem; }
+        .page-header h1 { font-family: "Bebas Neue", sans-serif; font-size: 1.5rem; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+        .page-header p { font-size: 0.8rem; opacity: 0.9; }
+
+        .estimate-grid { display: grid; grid-template-columns: 1fr 320px; gap: 1.2rem; align-items: start; }
+        @media (max-width: 1024px) { .estimate-grid { grid-template-columns: 1fr; } }
+
+        .card { background: var(--white); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); border: 1px solid var(--border); }
+        .card h2 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.4rem; }
+        .card h2 .icon { width: 22px; height: 22px; background: linear-gradient(135deg, #e63636, #c41c1c); border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 0.7rem; }
+
+        .data-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f3f4f6; }
+        .data-row:last-child { border-bottom: none; }
+        .data-row .label { font-size: 0.8rem; color: var(--gray-text); }
+        .data-row .value { font-size: 0.85rem; font-weight: 600; }
+        .data-row.highlight { background: var(--off-white); margin: 0 -1.2rem; padding: 0.6rem 1.2rem; border-radius: 8px; margin-top: 0.4rem; }
+        .data-row.highlight .value { color: var(--primary); font-size: 0.95rem; }
+
+        .summary-sidebar { position: sticky; top: 80px; }
+        .summary-card { background: var(--white); border-radius: 14px; padding: 1.2rem; box-shadow: 0 8px 30px rgba(230, 54, 54, 0.1); border: 2px solid var(--primary); margin-bottom: 0.8rem; }
+        .summary-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .summary-section { margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f3f4f6; }
+        .summary-section:last-of-type { border-bottom: none; }
+        .summary-label { font-size: 0.65rem; color: var(--gray-text); margin-bottom: 0.15rem; text-transform: uppercase; }
+        .summary-value { font-size: 1.1rem; font-weight: 700; }
+
+        .yield-box { background: linear-gradient(135deg, #e63636, #c41c1c); color: var(--white); padding: 0.8rem; border-radius: 10px; text-align: center; margin: 0.8rem 0; }
+        .yield-box .label { font-size: 0.65rem; opacity: 0.9; }
+        .yield-box .value { font-size: 1.5rem; font-weight: 700; }
+        .yield-sub { display: flex; justify-content: space-around; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.75rem; }
+
+        .summary-actions { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.8rem; }
+        .btn { display: block; padding: 0.7rem 0.9rem; border-radius: 50px; font-weight: 600; font-size: 0.8rem; text-align: center; border: none; cursor: pointer; }
+        .btn.primary { background: linear-gradient(135deg, #e63636, #c41c1c); color: var(--white); }
+        .btn.secondary { background: var(--white); color: var(--primary); border: 2px solid var(--primary); }
+
+        .empty-state { text-align: center; padding: 3rem 1.5rem; background: var(--white); border-radius: 14px; grid-column: 1 / -1; }
+        .empty-state h2 { font-size: 1.1rem; margin-bottom: 0.8rem; }
+        .empty-state p { color: var(--gray-text); margin-bottom: 1.5rem; }
+
+        .task-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+        .task-tag { display: inline-flex; align-items: center; gap: 0.2rem; padding: 0.25rem 0.6rem; background: var(--off-white); border-radius: 50px; font-size: 0.7rem; }
+        .task-tag .phase { background: var(--primary); color: var(--white); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.6rem; font-weight: 700; }
+
+        .notes-card { background: var(--white); border-radius: 14px; padding: 0.8rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); border: 1px solid var(--border); }
+        .notes-card h4 { font-size: 0.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .notes-card ul { list-style: none; }
+        .notes-card li { font-size: 0.65rem; color: var(--gray-text); padding: 0.15rem 0 0.15rem 0.8rem; position: relative; }
+        .notes-card li::before { content: '•'; position: absolute; left: 0; color: var(--primary); }
+
+        /* 内訳テーブル用スタイル */
+        .breakdown-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; margin-top: 0.5rem; }
+        .breakdown-table th { background: var(--off-white); padding: 0.5rem; text-align: left; font-weight: 600; border-bottom: 2px solid var(--primary); }
+        .breakdown-table th:last-child, .breakdown-table td:last-child { text-align: right; }
+        .breakdown-table td { padding: 0.4rem 0.5rem; border-bottom: 1px solid #f3f4f6; }
+        .breakdown-table tr.category { background: #fdf8fc; }
+        .breakdown-table tr.category td { font-weight: 600; color: var(--primary-dark); }
+        .breakdown-table tr.subtotal { background: var(--off-white); }
+        .breakdown-table tr.subtotal td { font-weight: 700; }
+        .breakdown-table tr.total { background: linear-gradient(135deg, #e63636, #c41c1c); color: white; }
+        .breakdown-table tr.total td { font-weight: 700; padding: 0.6rem 0.5rem; }
+        .breakdown-table .sub-item { padding-left: 1.5rem; color: var(--gray-text); }
+        .breakdown-table .note { font-size: 0.65rem; color: var(--gray-text); }
+
+        .section-badge { display: inline-block; background: var(--primary); color: white; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; margin-left: 0.5rem; }
+
+        @media (max-width: 768px) { .main-container { padding: 70px 1rem 1.5rem; } }
+        @media print { header, .summary-actions { display: none; } .estimate-grid { display: block; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo"><img src="../logo.png" alt="TAmJ" style="height: 28px;"></a>
+            <a href="service-development.html" class="back-link">← シミュレーションに戻る</a>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="page-header">
+            <span class="member-badge">MEMBER ESTIMATE v6</span>
+            <h1>開発シミュレーション 詳細見積</h1>
+            <p id="headerTimestamp">作成日時: -</p>
+        </div>
+        <div class="estimate-grid" id="estimateContent"></div>
+    </main>
+
+    <script>
+        const facilityNames = { tokuyo:'特養', yuryo:'有料老人ホーム', sakouju:'サ高住', groupHome:'グループホーム' };
+        function yen(n){ return "¥"+Math.round(Number(n||0)).toLocaleString("ja-JP"); }
+        function yenShort(n){ n=Number(n||0); if(n>=1e8) return "¥"+(n/1e8).toFixed(2)+"億"; if(n>=1e4) return "¥"+Math.round(n/1e4).toLocaleString()+"万"; return yen(n); }
+        function yenRange(min,max){ return `${yenShort(min)}〜${yenShort(max)}`; }
+        function formatDate(iso){ const d=new Date(iso); return d.toLocaleDateString('ja-JP')+' '+d.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'}); }
+
+        // A工事内訳比率（建築費に対する比率、介護施設標準）
+        const A_BREAKDOWN_RATIOS = [
+            { category: '仮設工事', ratio: 0.06, items: [
+                { name: '共通仮設', ratio: 0.35, note: '仮囲い、仮設電気水道、現場事務所等' },
+                { name: '直接仮設', ratio: 0.65, note: '足場、養生、安全設備' }
+            ]},
+            { category: '土工事', ratio: 0.04, items: [
+                { name: '掘削・埋戻し', ratio: 0.70, note: '根切り、埋戻し、残土処分' },
+                { name: '地業', ratio: 0.30, note: '砕石地業、転圧' }
+            ]},
+            { category: '躯体工事', ratio: 0.25, items: [
+                { name: '基礎', ratio: 0.30, note: '基礎コンクリート、型枠、配筋' },
+                { name: '構造躯体', ratio: 0.70, note: '柱・梁・床・壁（RC/S）' }
+            ]},
+            { category: '防水工事', ratio: 0.03, items: [
+                { name: '屋上防水', ratio: 0.70, note: '屋上、バルコニー防水' },
+                { name: '浴室防水', ratio: 0.30, note: '浴室・機械浴室床防水' }
+            ]},
+            { category: '外装工事', ratio: 0.10, items: [
+                { name: '外壁', ratio: 0.65, note: '外壁仕上（ALC、パネル等）' },
+                { name: '開口部', ratio: 0.35, note: 'サッシ、自動ドア' }
+            ]},
+            { category: '内装工事', ratio: 0.15, items: [
+                { name: '共用部仕上', ratio: 0.25, note: '廊下・ホール床壁天井（長尺シート等）' },
+                { name: '居室仕上', ratio: 0.35, note: '居室床・壁・天井' },
+                { name: '建具', ratio: 0.25, note: '居室扉、共用部建具' },
+                { name: '造作', ratio: 0.15, note: '収納、カウンター等' }
+            ]},
+            { category: '給排水衛生設備', ratio: 0.15, items: [
+                { name: '給水・給湯', ratio: 0.25, note: '居室・共用部給水給湯' },
+                { name: '排水', ratio: 0.15, note: '汚水・雑排水' },
+                { name: '衛生器具', ratio: 0.35, note: '全居室トイレ・洗面、共用トイレ' },
+                { name: '浴室設備', ratio: 0.25, note: '一般浴、機械浴槽据付（設備扱い）' }
+            ]},
+            { category: '空調換気設備', ratio: 0.08, items: [
+                { name: '空調', ratio: 0.70, note: '全居室エアコン、共用部空調' },
+                { name: '換気', ratio: 0.30, note: '24時間換気、浴室換気' }
+            ]},
+            { category: '電気設備', ratio: 0.10, items: [
+                { name: '受変電', ratio: 0.20, note: '受電盤、分電盤' },
+                { name: '照明', ratio: 0.30, note: '居室・共用部照明、非常照明' },
+                { name: '弱電', ratio: 0.30, note: 'ナースコール、インターホン等配線' },
+                { name: '防災', ratio: 0.20, note: '自火報、誘導灯' }
+            ]},
+            { category: '外構工事', ratio: 0.04, items: [
+                { name: 'アプローチ', ratio: 0.60, note: '玄関アプローチ、スロープ' },
+                { name: '外部設備', ratio: 0.40, note: '外部給排水、外部手摺' }
+            ]}
+        ];
+
+        // B工事内訳（固定費目安）
+        const B_BREAKDOWN = [
+            { name: 'サイン・看板', note: '館内サイン、案内板', unitPrice: 500000 },
+            { name: '防犯・監視', note: '監視カメラ、入退室管理', perRoom: 30000 },
+            { name: 'ネットワーク配線', note: 'LAN配線、Wi-Fi AP設置', perRoom: 25000 },
+            { name: 'カーテンレール', note: 'カーテンレール一式', perRoom: 15000 }
+        ];
+
+        function generateBreakdownTable(buildCostMid, residents, gfa) {
+            let html = '<table class="breakdown-table">';
+            html += '<tr><th>工事項目</th><th>内容</th><th>金額（税抜）</th></tr>';
+            
+            let totalA = 0;
+            
+            // A工事内訳
+            A_BREAKDOWN_RATIOS.forEach(cat => {
+                const catTotal = buildCostMid * cat.ratio;
+                totalA += catTotal;
+                
+                html += `<tr class="category"><td colspan="2">${cat.category}</td><td>${yen(catTotal)}</td></tr>`;
+                
+                cat.items.forEach(item => {
+                    const itemCost = catTotal * item.ratio;
+                    html += `<tr><td class="sub-item">${item.name}</td><td class="note">${item.note}</td><td>${yen(itemCost)}</td></tr>`;
+                });
+            });
+            
+            html += `<tr class="subtotal"><td colspan="2">A工事 小計</td><td>${yen(totalA)}</td></tr>`;
+            
+            // B工事内訳
+            let totalB = 0;
+            html += `<tr class="category"><td colspan="3" style="background:var(--off-white);color:var(--primary-dark);">B工事（付帯工事）</td></tr>`;
+            
+            B_BREAKDOWN.forEach(item => {
+                let cost = 0;
+                if(item.unitPrice) cost = item.unitPrice;
+                if(item.perRoom) cost = item.perRoom * residents;
+                totalB += cost;
+                html += `<tr><td class="sub-item">${item.name}</td><td class="note">${item.note}</td><td>${yen(cost)}</td></tr>`;
+            });
+            
+            html += `<tr class="subtotal"><td colspan="2">B工事 小計</td><td>${yen(totalB)}</td></tr>`;
+            
+            html += `<tr class="total"><td colspan="2">A+B工事 合計（税抜）</td><td>${yen(totalA + totalB)}</td></tr>`;
+            
+            html += '</table>';
+            
+            // 単価情報
+            html += `<div style="margin-top:0.8rem;padding:0.6rem;background:#ffffff;border-radius:8px;font-size:0.7rem;color:var(--gray-text);">`;
+            html += `<div style="display:flex;gap:1rem;flex-wrap:wrap;">`;
+            html += `<span>㎡単価: <b style="color:var(--dark);">${yen(buildCostMid/gfa)}/㎡</b></span>`;
+            html += `<span>坪単価: <b style="color:var(--dark);">${yen(buildCostMid/gfa*3.3)}/坪</b></span>`;
+            html += `<span>延床面積: <b style="color:var(--dark);">${gfa.toLocaleString()}㎡</b></span>`;
+            html += `</div></div>`;
+            
+            return html;
+        }
+
+        function render(){
+            const raw=localStorage.getItem('devSimulation');
+            const container=document.getElementById('estimateContent');
+            if(!raw){
+                container.innerHTML=`<div class="empty-state"><h2>シミュレーションデータがありません</h2><p>開発シミュレーションページで条件を入力してください。</p><a href="service-development.html" class="btn primary" style="display:inline-block;padding:0.8rem 1.5rem;">シミュレーションへ</a></div>`;
+                return;
+            }
+            const data=JSON.parse(raw);
+            document.getElementById('headerTimestamp').textContent='作成日時: '+formatDate(data.savedAt);
+            const fac=data.facility||{};
+            const inp=data.inputs||{};
+            const comp=data.computed||{};
+            const land=inp.land||{};
+            const tasks=data.selectedTasks||[];
+            const landMode=land.mode==='lease'?'借地':'購入';
+            const totalLandFees=(land.auto==='auto'?(land.landFees_auto_net||0):0)+(land.landFees_manual_net||0);
+            
+            const buildMin = comp.build?.min || 0;
+            const buildMax = comp.build?.max || 0;
+            const buildMid = (buildMin + buildMax) / 2;
+            const gfa = inp.gfa_m2 || 1;
+            const residents = fac.residents || 50;
+
+            container.innerHTML=`
+                <div class="estimate-main">
+                    <div class="card">
+                        <h2><span class="icon">0</span> 施設計画</h2>
+                        <div class="data-row"><span class="label">施設種別</span><span class="value">${facilityNames[fac.facilityType]||fac.facilityType||'-'}</span></div>
+                        <div class="data-row"><span class="label">入居者数</span><span class="value">${residents} 人</span></div>
+                        <div class="data-row"><span class="label">個室面積</span><span class="value">${fac.privateArea||0} ㎡/室</span></div>
+                        <div class="data-row"><span class="label">レンタブル比</span><span class="value">${fac.rentableRatio||0}%</span></div>
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">1</span> 建築条件</h2>
+                        <div class="data-row"><span class="label">都道府県</span><span class="value">${inp.pref||'-'}</span></div>
+                        <div class="data-row"><span class="label">構造</span><span class="value">${inp.structure||'-'}</span></div>
+                        <div class="data-row"><span class="label">階数</span><span class="value">${inp.floors||2} 階</span></div>
+                        <div class="data-row"><span class="label">延床面積</span><span class="value">${(inp.gfa_m2||0).toLocaleString()} ㎡</span></div>
+                        <div class="data-row"><span class="label">用途係数 / 指数</span><span class="value">×${inp.useFactor||1.25} / ×${inp.indexFactor||1.10}</span></div>
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">2</span> 土地・仕入</h2>
+                        <div class="data-row"><span class="label">土地形態</span><span class="value">${landMode}</span></div>
+                        ${land.mode==='purchase'?`<div class="data-row"><span class="label">土地仕入価格</span><span class="value">${yenShort(land.land_price||0)}</span></div>`:`<div class="data-row"><span class="label">月額地代</span><span class="value">${yenShort(land.ground_rent_month||0)}/月</span></div>`}
+                        <div class="data-row"><span class="label">土地関連諸費用</span><span class="value">${yenShort(totalLandFees)}</span></div>
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">3</span> 建築費（A+B工事）内訳 <span class="section-badge">税抜</span></h2>
+                        <div class="data-row highlight"><span class="label">建築費概算</span><span class="value">${yenRange(buildMin, buildMax)}</span></div>
+                        ${generateBreakdownTable(buildMid, residents, gfa)}
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">4</span> その他費用</h2>
+                        <div class="data-row"><span class="label">開発作業費</span><span class="value">${yenRange(comp.devTasksCost?.min||0, comp.devTasksCost?.max||0)}</span></div>
+                        <div class="data-row highlight"><span class="label">投資総額（税込概算）</span><span class="value">${yenRange(comp.summary?.totalMin||0, comp.summary?.totalMax||0)}</span></div>
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">5</span> 選択した開発作業</h2>
+                        ${tasks.length>0?`<div class="task-list">${tasks.map(t=>`<span class="task-tag"><span class="phase">${t.split('-')[0]}</span>${t}</span>`).join('')}</div>`:'<p style="color:var(--gray-text);font-size:0.8rem;">選択なし</p>'}
+                    </div>
+                    <div class="card">
+                        <h2><span class="icon">6</span> 収支</h2>
+                        <div class="data-row"><span class="label">年間収入</span><span class="value">${yenShort(comp.summary?.incomeY||0)}</span></div>
+                        <div class="data-row highlight"><span class="label">年間NOI</span><span class="value">${yenShort(comp.summary?.noiY||0)}</span></div>
+                    </div>
+                </div>
+                <div class="summary-sidebar">
+                    <div class="summary-card">
+                        <h3>📊 見積サマリー</h3>
+                        <div class="summary-section"><div class="summary-label">施設種別</div><div class="summary-value" style="font-size:0.85rem;">${facilityNames[fac.facilityType]||'-'} / ${residents}人</div></div>
+                        <div class="summary-section"><div class="summary-label">投資総額（概算）</div><div class="summary-value">${yenShort(((comp.summary?.totalMin||0)+(comp.summary?.totalMax||0))/2)}</div></div>
+                        <div class="summary-section"><div class="summary-label">年間NOI</div><div class="summary-value">${yenShort(comp.summary?.noiY||0)}</div></div>
+                        <div class="yield-box">
+                            <div class="label">NOI利回り</div>
+                            <div class="value">${(comp.summary?.noiYield||0).toFixed(2)}%</div>
+                            <div class="yield-sub">
+                                <span>表面: ${(comp.summary?.grossYield||0).toFixed(1)}%</span>
+                                <span>回収: ${comp.summary?.noiY>0?(((comp.summary?.totalMin||0)+(comp.summary?.totalMax||0))/2/comp.summary?.noiY).toFixed(1):'-'}年</span>
+                            </div>
+                        </div>
+                        <div class="summary-actions">
+                            <button class="btn primary" onclick="window.print()">📄 印刷 / PDF保存</button>
+                            <button class="btn secondary" onclick="exportCSV()">📊 CSVエクスポート</button>
+                            <a href="mailto:info@tamj.jp?subject=開発見積のご相談" class="btn secondary" style="text-decoration:none;">✉️ 正式見積を依頼</a>
+                        </div>
+                    </div>
+                    <div class="notes-card">
+                        <h4>💡 ご注意</h4>
+                        <ul>
+                            <li>本見積は概算シミュレーションです</li>
+                            <li>A工事単価ベース（動産除外）</li>
+                            <li>B工事は付帯工事の参考値</li>
+                            <li>C工事（什器備品）は別途</li>
+                            <li>正式見積はヒアリング後に作成</li>
+                        </ul>
+                    </div>
+                </div>`;
+        }
+
+        function exportCSV(){
+            const raw=localStorage.getItem('devSimulation');
+            if(!raw){ alert('エクスポートするデータがありません'); return; }
+            const data=JSON.parse(raw);
+            const fac=data.facility||{};
+            const inp=data.inputs||{};
+            const comp=data.computed||{};
+            const buildMid = ((comp.build?.min||0) + (comp.build?.max||0)) / 2;
+            const gfa = inp.gfa_m2 || 1;
+            
+            let csv='項目,値\n';
+            csv+=`施設種別,${facilityNames[fac.facilityType]||fac.facilityType}\n`;
+            csv+=`入居者数,${fac.residents}\n`;
+            csv+=`都道府県,${inp.pref}\n`;
+            csv+=`構造,${inp.structure}\n`;
+            csv+=`階数,${inp.floors||2}\n`;
+            csv+=`延床面積,${inp.gfa_m2}㎡\n`;
+            csv+=`㎡単価,${Math.round(buildMid/gfa)}円/㎡\n`;
+            csv+=`坪単価,${Math.round(buildMid/gfa*3.3)}円/坪\n`;
+            csv+=`建築費（MIN）,${comp.build?.min||0}\n`;
+            csv+=`建築費（MAX）,${comp.build?.max||0}\n`;
+            csv+='\nA工事内訳,金額\n';
+            A_BREAKDOWN_RATIOS.forEach(cat => {
+                csv+=`${cat.category},${Math.round(buildMid * cat.ratio)}\n`;
+            });
+            csv+='\n';
+            csv+=`投資総額（MIN）,${comp.summary?.totalMin||0}\n`;
+            csv+=`投資総額（MAX）,${comp.summary?.totalMax||0}\n`;
+            csv+=`年間NOI,${comp.summary?.noiY||0}\n`;
+            csv+=`NOI利回り,${(comp.summary?.noiYield||0).toFixed(2)}%\n`;
+            const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+            const link=document.createElement('a');
+            link.href=URL.createObjectURL(blob);
+            link.download='development_estimate_v6_'+new Date().toISOString().slice(0,10)+'.csv';
+            link.click();
+        }
+
+        render();
+    </script>
+</body>
+</html>
