@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温泉を、掘って終わらせない｜HOT SPRING EQUITY PROJECT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #fff;
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #E60012;
+        }
+        
+        .header-tag {
+            background: #E60012;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #E60012 0%, #C5000F 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .hero-sub {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Key Visual */
+        .key-visual {
+            margin: 0;
+        }
+        
+        .key-visual img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Funding Bar */
+        .funding-bar {
+            background: #fff;
+            padding: 30px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .funding-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .funding-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .funding-main {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .funding-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .funding-amount span {
+            font-size: 1.2rem;
+        }
+        
+        .funding-target {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e8e8e8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #E60012;
+            border-radius: 6px;
+            width: 15%;
+        }
+        
+        .funding-meta {
+            display: flex;
+            gap: 40px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .funding-meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .funding-meta-label {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 3px;
+        }
+        
+        .funding-meta-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        /* TOC */
+        .toc {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 25px 30px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        
+        .toc-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .toc-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 30px;
+        }
+        
+        .toc-item {
+            color: #E60012;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 5px 0;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .toc-item:hover {
+            border-bottom-color: #E60012;
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+        }
+        
+        .section-label {
+            font-size: 0.8rem;
+            color: #E60012;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        /* Image */
+        .full-image {
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .full-image img {
+            width: 100%;
+            display: block;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .image-grid img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .image-grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .image-grid-3 img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        /* Text */
+        p {
+            margin-bottom: 1.5em;
+            color: #333;
+        }
+        
+        .lead {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 2em;
+        }
+        
+        .highlight-text {
+            color: #E60012;
+            font-weight: 700;
+        }
+        
+        /* Box */
+        .info-box {
+            background: #f8f8f8;
+            padding: 25px 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .info-box h4 {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .accent-box {
+            background: #fff;
+            border-left: 4px solid #E60012;
+            padding: 20px 25px;
+            margin: 30px 0;
+        }
+        
+        .red-box {
+            background: #E60012;
+            color: white;
+            padding: 25px 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .red-box p {
+            color: white;
+        }
+        
+        /* List */
+        .simple-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .simple-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .simple-list li::before {
+            content: "●";
+            color: #E60012;
+            font-size: 0.6rem;
+            margin-top: 0.5em;
+        }
+        
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        .budget-table th,
+        .budget-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .budget-table th {
+            background: #f8f8f8;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .budget-table .amount {
+            text-align: right;
+            font-weight: 700;
+        }
+        
+        .budget-table tfoot td {
+            background: #E60012;
+            color: white;
+            font-weight: 700;
+        }
+        
+        /* Phase */
+        .phase-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .phase-item.current {
+            background: #fff5f5;
+            margin: 0 -20px;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #E60012;
+            border-bottom: 2px solid #E60012;
+        }
+        
+        .phase-percent {
+            width: 80px;
+            height: 80px;
+            background: #E60012;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .phase-percent span {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .phase-percent small {
+            font-size: 0.65rem;
+        }
+        
+        .phase-content h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .phase-content p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        /* Return Card */
+        .return-item {
+            display: flex;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            align-items: flex-start;
+        }
+        
+        .return-amount {
+            background: #E60012;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+        
+        .return-desc {
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        /* Message Card */
+        .message-card {
+            background: #f8f8f8;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-avatar {
+            width: 60px;
+            height: 60px;
+            background: #E60012;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .message-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .message-role {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .message-text {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.9;
+        }
+        
+        /* Note */
+        .note-list {
+            background: #f8f8f8;
+            padding: 25px 30px;
+            border-radius: 8px;
+        }
+        
+        .note-list p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.8em;
+        }
+        
+        .note-list p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        footer p {
+            color: #999;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            .funding-amount {
+                font-size: 1.8rem;
+            }
+            
+            .funding-main {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .funding-meta {
+                gap: 30px;
+            }
+            
+            .phase-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .return-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">HOT SPRING EQUITY PROJECT</div>
+            <span class="header-tag">クラウドファンディング</span>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>温泉を、掘って終わらせない。<br>北海道で温泉インフラを一緒に作りませんか</h1>
+            <p class="hero-sub">医療・介護・地域インフラとして長期的に社会で使い続ける温泉掘削プロジェクト</p>
+        </div>
+    </section>
+
+    <!-- Key Visual -->
+    <div class="key-visual">
+        <img src="hot3.jpg" alt="温泉プール">
+    </div>
+
+    <!-- Funding Bar -->
+    <div class="funding-bar">
+        <div class="funding-inner">
+            <div class="funding-label">支援総額</div>
+            <div class="funding-main">
+                <div class="funding-amount">4,500,000<span>円</span></div>
+                <div class="funding-target">目標金額 3,000万円（第1回）</div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            <div class="funding-meta">
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">支援者</span>
+                    <span class="funding-meta-value">32人</span>
+                </div>
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">残り</span>
+                    <span class="funding-meta-value">60日</span>
+                </div>
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">達成率</span>
+                    <span class="funding-meta-value">15%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="container">
+        <div class="toc">
+            <div class="toc-title">目次</div>
+            <div class="toc-list">
+                <a href="#about" class="toc-item">01：プロジェクト概要</a>
+                <a href="#why" class="toc-item">02：なぜ温泉掘削なのか</a>
+                <a href="#budget" class="toc-item">03：総費用と内訳</a>
+                <a href="#phase" class="toc-item">04：フェーズ分解</a>
+                <a href="#crowdfunding" class="toc-item">05：クラファン設計</a>
+                <a href="#message" class="toc-item">06：メッセージ</a>
+                <a href="#returns" class="toc-item">07：リターン</a>
+                <a href="#note" class="toc-item">08：ご留意事項</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section: About -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <p class="section-label">01 ABOUT</p>
+                <h2 class="section-title">プロジェクト概要</h2>
+            </div>
+            
+            <p class="lead"><strong>Hot Spring Equity Project</strong>は、温泉を「一時的な観光資源」ではなく、医療・介護・地域インフラとして長期的に社会で使い続けるための掘削プロジェクトです。</p>
+            
+            <div class="full-image">
+                <img src="hot-cycle.png" alt="プロジェクト全体像">
+            </div>
+            
+            <p>温泉がもたらす価値は、観光やレジャーだけではありません。温熱療法によるリハビリテーション、高齢者の健康維持、地域コミュニティの形成拠点として、<span class="highlight-text">社会インフラの一部</span>となります。</p>
+            
+            <div class="accent-box">
+                <p style="margin:0;"><strong>「掘削は数か月。運用は数十年。」</strong><br>このプロジェクトは、掘削そのものよりも<strong>その後の運用に価値を置いています。</strong></p>
+            </div>
+            
+            <div class="image-grid-3">
+                <img src="monkey.jpg" alt="温泉に入るニホンザル">
+                <img src="hot10.jpg" alt="日本の水文化">
+                <img src="dennis-z.jpg" alt="間欠泉">
+            </div>
+        </section>
+
+        <!-- Section: Why -->
+        <section id="why" class="section">
+            <div class="section-header">
+                <p class="section-label">02 WHY</p>
+                <h2 class="section-title">なぜ温泉掘削なのか</h2>
+            </div>
+            
+            <div class="full-image">
+                <img src="hot9.jpg" alt="地熱エネルギー">
+            </div>
+            
+            <p>日本は世界第3位の地熱資源国です。しかし、その多くは未活用のまま眠っています。私たちは<span class="highlight-text">北海道の非火山性断層循環型</span>の温泉資源に着目し、持続可能な形で社会に届けることを目指します。</p>
+            
+            <div class="full-image">
+                <img src="hot-mechanism2.png" alt="温泉のメカニズム">
+            </div>
+            
+            <div class="info-box">
+                <h4>温泉タイプの違い</h4>
+                <ul class="simple-list">
+                    <li>火山性温泉：マグマの熱で温められた水が上昇</li>
+                    <li>断層循環型温泉：断層を通じて地下深部の水が循環</li>
+                    <li>深部循環型温泉：地温勾配で温められた深層水</li>
+                </ul>
+                <p style="margin:0; font-size: 0.9rem; color: #666;">本プロジェクトは断層循環型・深部循環型を対象としています。</p>
+            </div>
+            
+            <div class="full-image">
+                <img src="hot-mechanism1.png" alt="掘削深度イメージ">
+            </div>
+            
+            <p>1,000m級の掘削で、地下深部の温泉水層にアクセス。温度勾配を確認しながら確実に進めます。</p>
+            
+            <div class="image-grid">
+                <img src="hot2.jpg" alt="掘削作業">
+                <img src="hot5.jpg" alt="北海道の現場">
+            </div>
+        </section>
+
+        <!-- Section: Budget -->
+        <section id="budget" class="section">
+            <div class="section-header">
+                <p class="section-label">03 BUDGET</p>
+                <h2 class="section-title">総費用と内訳</h2>
+            </div>
+            
+            <p>※ 北海道・非火山性断層循環型／1源泉<br>※ 「最先端だけどSFではない」実装前提</p>
+            
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>項目</th>
+                        <th class="amount">金額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>① 事前調査・設計</td>
+                        <td class="amount">8,000万円</td>
+                    </tr>
+                    <tr>
+                        <td>② 掘削工事（最大コスト）</td>
+                        <td class="amount">6.5億円</td>
+                    </tr>
+                    <tr>
+                        <td>③ 計測・制御・安全設備</td>
+                        <td class="amount">1.5億円</td>
+                    </tr>
+                    <tr>
+                        <td>④ 地上設備・配管・源泉整備</td>
+                        <td class="amount">1.2億円</td>
+                    </tr>
+                    <tr>
+                        <td>⑤ オペレーション室</td>
+                        <td class="amount">5,000万円</td>
+                    </tr>
+                    <tr>
+                        <td>⑥ 初期運転・試験・予備費</td>
+                        <td class="amount">1.5億円</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>総額</td>
+                        <td class="amount">約11億円</td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div class="full-image">
+                <img src="hot-mecha.png" alt="掘削設備群">
+            </div>
+            
+            <p>石油・ガス業界、地熱発電、スマートファクトリーの最先端要素を段階的に導入。これは本来、国家プロジェクトが10〜20年かけて作る世界です。</p>
+        </section>
+
+        <!-- Section: Phase -->
+        <section id="phase" class="section">
+            <div class="section-header">
+                <p class="section-label">04 PHASE</p>
+                <h2 class="section-title">フェーズ分解</h2>
+            </div>
+            
+            <p>全フェーズを一度に実行せず、「到達した分だけ確実に前へ進む」段階型の実行設計です。</p>
+            
+            <div class="red-box">
+                <p style="margin:0;"><strong>❌「全部揃わないと1円も動かない」</strong><br><strong>⭕ フェーズごとに"意味のある成果"を積み上げる</strong><br><br>総費用到達前に「見える成果」を作ります。<br><strong>総額を集めなくても、価値は途中から生まれる。</strong></p>
+            </div>
+            
+            <div class="phase-item current">
+                <div class="phase-percent">
+                    <span>🟢 0</span>
+                    <small>〜3,000万</small>
+                </div>
+                <div class="phase-content">
+                    <h4>PHASE 0｜構想・合意形成【今ここ】</h4>
+                    <p>調査・文献収集、基本構想策定、行政事前相談、サイト・可視化<br>→ 成果：「なぜここでやるか」を説明できる状態 / 撤退判断も可能</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>🟡 1</span>
+                    <small>5,000万〜1億</small>
+                </div>
+                <div class="phase-content">
+                    <h4>PHASE 1｜掘削準備フェーズ</h4>
+                    <p>詳細設計、掘削業者契約、リグ仮押さえ、環境・安全計画<br>→ 成果：「もう後戻りしない」段階 / 投資家・金融機関と話せる状態</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>🟠 2</span>
+                    <small>1.5億〜3億</small>
+                </div>
+                <div class="phase-content">
+                    <h4>PHASE 2｜浅部掘削・検証【一番ドラマがある】</h4>
+                    <p>300〜700m級掘削、温度勾配確認、地質確認、成功確率の大幅向上<br>→ 成果：「当たる／外れる」がほぼ分かる / 失敗でも学術・データ価値あり</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>🔴 3</span>
+                    <small>2.5億〜4億</small>
+                </div>
+                <div class="phase-content">
+                    <h4>PHASE 3｜本掘削（勝負）</h4>
+                    <p>本命深度まで掘削、湧出確認、ケーシング完成<br>→ 成果：源泉誕生 or 明確な結論</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>🔵 4</span>
+                    <small>5,000万〜1.5億</small>
+                </div>
+                <div class="phase-content">
+                    <h4>PHASE 4｜運用・社会実装</h4>
+                    <p>温泉利用開始、医療・介護連携、データ公開・価値化<br>→ 成果：社会インフラとしての温泉運用開始</p>
+                </div>
+            </div>
+            
+            <div class="full-image">
+                <img src="hot.png" alt="温泉の社会実装">
+            </div>
+        </section>
+
+        <!-- Section: Crowdfunding -->
+        <section id="crowdfunding" class="section">
+            <div class="section-header">
+                <p class="section-label">05 CROWDFUNDING</p>
+                <h2 class="section-title">クラファン設計</h2>
+            </div>
+            
+            <div class="info-box">
+                <h4>支援者に刺さる思想</h4>
+                <p style="margin:0; font-size: 1.05rem; line-height: 2;">
+                    「一歩ずつ、確実に進める」<br>
+                    「途中成果も全て公開する」<br>
+                    「未達でも"ゼロ"にはならない」<br><br>
+                    <strong style="color: #E60012;">途中経過そのものが価値になる設計です。</strong>
+                </p>
+            </div>
+            
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>クラファン回</th>
+                        <th class="amount">目標金額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>第1回：フェーズ0〜1（調査・設計・可視化）</td>
+                        <td class="amount">3,000万〜5,000万円</td>
+                    </tr>
+                    <tr>
+                        <td>第2回：フェーズ2（浅部掘削）</td>
+                        <td class="amount">1億〜2億円</td>
+                    </tr>
+                    <tr>
+                        <td>第3回：大型資金（金融・事業投資）</td>
+                        <td class="amount">数億円〜</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="accent-box">
+                <p style="margin:0;"><strong>まとめ（本音）</strong><br>・最初から11億集める必要はない<br>・でも最終形は10億規模<br>・クラファンは「起点」として非常に相性がいい<br>・<span class="highlight-text">途中経過そのものが価値になる設計</span></p>
+            </div>
+            
+            <div class="full-image">
+                <img src="hot8.jpg" alt="水車と循環">
+            </div>
+        </section>
+
+        <!-- Section: Message -->
+        <section id="message" class="section">
+            <div class="section-header">
+                <p class="section-label">06 MESSAGE</p>
+                <h2 class="section-title">プロジェクトメンバーからのメッセージ</h2>
+            </div>
+            
+            <div class="full-image">
+                <img src="hot4.jpg" alt="プラント設備">
+            </div>
+            
+            <div class="message-card">
+                <div class="message-header">
+                    <div class="message-avatar">♨️</div>
+                    <div>
+                        <div class="message-name">Tiger.J.Bob</div>
+                        <div class="message-role">TAmJ Inc. CEO / プロジェクト実行責任者</div>
+                    </div>
+                </div>
+                <div class="message-text">
+                    <p>温泉は「観光」だけのものではありません。医療、介護、リハビリ、そして地域コミュニティの核となる社会インフラです。</p>
+                    <p>私たちは、この構造的な可能性を実現したい。「掘って終わり」ではなく、30年、50年と社会に届き続ける温泉インフラを、皆さんと一緒に作っていきます。</p>
+                    <p style="margin:0;">あなたの支援が、日本のエネルギーの未来を変える一歩になります。ぜひ、一緒にこのプロジェクトを作り上げていきましょう。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Returns -->
+        <section id="returns" class="section">
+            <div class="section-header">
+                <p class="section-label">07 RETURNS</p>
+                <h2 class="section-title">リターン</h2>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">10,000円</span>
+                <span class="return-desc">お礼メール＋プロジェクト進捗レポート（PDF）</span>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">30,000円</span>
+                <span class="return-desc">上記＋掘削現場オンライン見学会ご招待</span>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">50,000円</span>
+                <span class="return-desc">上記＋温泉施設オープン時の優先招待券</span>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">100,000円</span>
+                <span class="return-desc">上記＋掘削現場リアル見学会ご招待</span>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">500,000円</span>
+                <span class="return-desc">上記＋施設内サポーターズボードにお名前掲載</span>
+            </div>
+            
+            <div class="return-item">
+                <span class="return-amount">1,000,000円</span>
+                <span class="return-desc">上記＋オペレーション室にお名前プレート設置＋年間パス</span>
+            </div>
+        </section>
+
+        <!-- Section: Note -->
+        <section id="note" class="section">
+            <div class="section-header">
+                <p class="section-label">08 NOTE</p>
+                <h2 class="section-title">ご留意事項</h2>
+            </div>
+            
+            <div class="note-list">
+                <p>・本プロジェクトはAll in形式となり、目標金額に満たなかった場合でも、Phase実行設計に基づき段階的に実施いたします。</p>
+                <p>・ご支援完了時の「応援コメント」は、本プロジェクトのPRに利用させていただく場合があります。</p>
+                <p>・スケジュールは変動する場合がございます。その際は本ページを通じて、皆様にご連絡いたします。</p>
+                <p>・温泉掘削は自然相手のため、100%の成功を保証するものではありません。ただし、失敗した場合でも学術・データ価値として成果を公開します。</p>
+                <p>・ご支援に関するご質問は、お問い合わせフォームよりご連絡ください。</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 HOT SPRING EQUITY PROJECT / TAmJ Inc. & NPO GO TO HAPPY LIFE. All rights reserved.</p>
+    </footer>
+</body>
+</html>

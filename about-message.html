@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MESSAGE | TAmJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E60012;
+            
+            --primary-dark: #C5000F;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: "Inter", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            line-height: 1.8; 
+            color: var(--dark); 
+        }
+        a { text-decoration: none; color: inherit; }
+
+        /* ========== Animations ========== */
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(60px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes gradientShift { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+        .animate-on-scroll { 
+            opacity: 0; 
+            transform: translateY(60px); 
+            transition: opacity 0.8s ease, transform 0.8s ease; 
+        }
+        .animate-on-scroll.animated { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+        .animate-left { 
+            opacity: 0; 
+            transform: translateX(-60px); 
+            transition: opacity 0.8s ease, transform 0.8s ease; 
+        }
+        .animate-left.animated { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+        .animate-right { 
+            opacity: 0; 
+            transform: translateX(60px); 
+            transition: opacity 0.8s ease, transform 0.8s ease; 
+        }
+        .animate-right.animated { 
+            opacity: 1; 
+            transform: translateX(0); 
+        }
+
+        /* ========== Header ========== */
+        header {
+            background: var(--white);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 4rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(230,0,18,0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .logo .char-m {
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 0.6em;
+            position: relative;
+            top: 0.1em;
+        }
+
+        .header-back {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            transition: color 0.3s;
+        }
+
+        .header-back:hover {
+            color: var(--primary);
+        }
+
+        /* ========== Hero ========== */
+        .hero {
+            background: linear-gradient(135deg, #E60012, #C5000F);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: var(--white);
+            padding: 12rem 2rem 6rem;
+            margin-top: 75px;
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .hero h1 {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* ========== Message Section ========== */
+        .message-section {
+            padding: 6rem 2rem;
+            background: var(--white);
+        }
+
+        .message-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .ceo-photo {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(230,0,18,0.2);
+            background: var(--pale);
+            aspect-ratio: 1;
+            object-fit: cover;
+        }
+
+        .ceo-info {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .ceo-info .position {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+        }
+
+        .ceo-info .name {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 0.3rem;
+            letter-spacing: 0.05em;
+        }
+
+        .message-content h2 {
+            font-family: "Inter", sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--primary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            font-weight: 700;
+        }
+
+        .message-content h2 .highlight {
+            color: var(--dark);
+        }
+
+        .message-content p {
+            font-size: 1.05rem;
+            color: #555;
+            line-height: 2;
+            margin-bottom: 0;
+        }
+
+        .message-content p + p {
+            margin-top: 2rem;
+        }
+
+        .message-content .lead {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 2.5rem;
+        }
+
+        .message-content .emphasis {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-weight: 600;
+            margin-top: 2.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid var(--primary);
+        }
+
+        .message-content .signature {
+            margin-top: 3rem;
+            text-align: right;
+        }
+
+        .message-content .signature .position {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .message-content .signature .name {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-top: 0.3rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* ========== Quote Section ========== */
+        .quote-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .quote-section blockquote {
+            font-family: "Inter", sans-serif;
+            font-size: 2rem;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .quote-section blockquote span {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ========== About Navigation Section ========== */
+        .about-nav-section {
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .about-nav-container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-nav-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            letter-spacing: 0.1em;
+        }
+
+        .about-nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .about-nav-list li {
+            margin: 0;
+        }
+
+        .about-nav-list a {
+            display: block;
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            color: var(--gray-text);
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .about-nav-list a:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .about-nav-list a.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* ========== Contact Section ========== */
+        .contact-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-card {
+            background: var(--white);
+            padding: 3rem 5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .contact-label {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1rem;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--primary);
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            background: var(--white);
+            color: var(--dark);
+            border-top: 1px solid #e0e0e0;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            color: var(--primary);
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo .char-m {
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 0.6em;
+            position: relative;
+            top: 0.1em;
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: var(--gray-text);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 1024px) {
+            .message-container {
+                grid-template-columns: 1fr;
+            }
+            .ceo-photo {
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem 2rem;
+            }
+            .hero {
+                padding: 10rem 2rem 4rem;
+            }
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .message-content h2 {
+                font-size: 1.5rem;
+            }
+            .quote-section blockquote {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">TA<span class="char-m">m</span>J</a>
+            <a href="home.html" class="header-back">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                HOME
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <span class="hero-label">ABOUT US</span>
+        <h1>MESSAGE</h1>
+    </section>
+
+    <section class="message-section">
+        <div class="message-container">
+            <div class="animate-left">
+                <img src="ceo-avatar.png" alt="CEO Tiger.J.Bob" class="ceo-photo">
+                <div class="ceo-info">
+                    <p class="position">CEO</p>
+                    <p class="name"><img src="flag-usa.png" alt="US" style="height:18px;vertical-align:middle;margin-right:4px;">TIGER.J.BOB</p>
+                    <p class="name-sub" style="font-size:0.8rem;color:#999;margin-top:0.2rem;"><img src="flag-japan.png" alt="JP" style="height:14px;vertical-align:middle;margin-right:4px;">JIN.OSHITA</p>
+                </div>
+            </div>
+            <div class="message-content animate-right">
+                <h2>必要な場所に、必要な仕組みを、<br><span class="highlight">最短で届ける。</span></h2>
+                
+                <p class="lead">私たちは、現場で歴史に触れ、逆算して考え、<br>動き、実装することを選び続けてきました。</p>
+                
+                <p class="emphasis">正解を語るのではなく、届く形に設計する。<br>それが、私たちの使命です。</p>
+                
+                <div class="signature">
+                    <p class="position">タムジ株式会社 CEO</p>
+                    <p class="name"><img src="flag-usa.png" alt="US" style="height:16px;vertical-align:middle;margin-right:4px;">TIGER.J.BOB</p>
+                    <p class="name" style="font-size:0.9rem;"><img src="flag-japan.png" alt="JP" style="height:14px;vertical-align:middle;margin-right:4px;">JIN.OSHITA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <blockquote class="animate-on-scroll">"すべての人に、<span>"イキる機会"</span> を届ける。"</blockquote>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-card">
+            <p class="contact-label">Contact</p>
+            <a href="mailto:info@tamjump.com" class="contact-link">お問い合わせはこちら →</a>
+        </div>
+    </section>
+
+    <!-- About Navigation -->
+    <section class="about-nav-section">
+        <div class="about-nav-container">
+            <h3 class="about-nav-title">ABOUT</h3>
+            <ul class="about-nav-list">
+                <li><a href="about-company.html">COMPANY</a></li>
+                <li><a href="about-message.html" class="active">MESSAGE</a></li>
+                <li><a href="about-philosophy.html">PHILOSOPHY</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">TA<span class="char-m">m</span>J</div>
+        <p class="footer-copy">© 2025 TAmJ Inc. & NPO GO TO HAPPY LIFE. All rights reserved.</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.animate-on-scroll, .animate-left, .animate-right').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAmJ | Touch all minds, Jump</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E60012;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: "Inter", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+            color: var(--dark);
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* ========== Split Hero ========== */
+        .split-hero {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+            position: relative;
+        }
+
+        .hero-half {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            transition: flex 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-half.left {
+            background: var(--primary);
+            align-items: center;
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+            clip-path: polygon(
+                0 0,
+                50% 0,
+                50% 6%,
+                56% 6%,
+                56% 12%,
+                48% 12%,
+                48% 18%,
+                54% 18%,
+                54% 24%,
+                46% 24%,
+                46% 30%,
+                52% 30%,
+                52% 36%,
+                48% 36%,
+                48% 42%,
+                55% 42%,
+                55% 48%,
+                47% 48%,
+                47% 54%,
+                53% 54%,
+                53% 60%,
+                49% 60%,
+                49% 66%,
+                51% 66%,
+                51% 72%,
+                47% 72%,
+                47% 78%,
+                54% 78%,
+                54% 84%,
+                50% 84%,
+                50% 90%,
+                52% 90%,
+                52% 100%,
+                0 100%
+            );
+        }
+
+        .hero-half.right {
+            background: var(--white);
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 10%;
+            padding-right: 0;
+            position: relative;
+            margin-left: -3%;
+        }
+
+        /* Subtle pattern overlay */
+        .hero-half.left::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .hero-half > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .split-hero:hover .hero-half:not(:hover) {
+            flex: 0.9;
+        }
+        .split-hero:hover .hero-half:hover {
+            flex: 1.1;
+        }
+
+        /* Hero Text */
+        .hero-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            color: var(--white);
+            line-height: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title .line {
+            display: block;
+        }
+
+        /* Subtitles */
+        .hero-subtitle {
+            font-family: "Inter", sans-serif;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+        }
+
+        .left-subtitle {
+            color: var(--white);
+            margin-right: 55%;
+            text-align: center;
+        }
+
+        .right-subtitle {
+            color: var(--primary);
+            text-align: left;
+        }
+
+        /* 太さバリエーション */
+        .weight-black {
+            -webkit-text-stroke: 2px currentColor;
+            paint-order: stroke fill;
+        }
+        .weight-bold {
+            -webkit-text-stroke: 1px currentColor;
+            paint-order: stroke fill;
+        }
+        .weight-light {
+            opacity: 0.7;
+            -webkit-text-stroke: 0;
+        }
+
+        /* ========== Left side - TAmJ (文字ごとに人格) ========== */
+        .hero-half.left .hero-title {
+            text-align: center;
+            font-size: clamp(3rem, 8vw, 6rem);
+            color: var(--white);
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            margin-right: 55%;
+        }
+
+        /* T: 極太・横幅狭め・支配 */
+        .hero-half.left .hero-title .char-t {
+            -webkit-text-stroke: 3px currentColor;
+            paint-order: stroke fill;
+            transform: scaleX(0.95);
+            margin-right: -0.02em;
+        }
+
+        /* A: 中太・Tに追従 */
+        .hero-half.left .hero-title .char-a {
+            -webkit-text-stroke: 1px currentColor;
+            margin-right: 0.12em; /* mの前に間を空ける */
+        }
+
+        /* m: 小文字・異物（Interフォントで小文字表示） */
+        .hero-half.left .hero-title .char-m {
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 0.6em;
+            position: relative;
+            top: 0.15em;
+            margin-right: 0.1em;
+            margin-left: 0.05em;
+        }
+
+        /* J: 極太・縦長・動こうとしている */
+        .hero-half.left .hero-title .char-j {
+            -webkit-text-stroke: 3px currentColor;
+            paint-order: stroke fill;
+            transform: scaleY(1.15);
+            transform-origin: top center;
+            position: relative;
+            top: 3px;
+        }
+
+        /* ========== Right side - TOUCH ALL mINDS JUmP ========== */
+        .hero-half.right .hero-title {
+            text-align: left;
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* TOUCH行 */
+        .hero-half.right .hero-title .line-touch {
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .hero-half.right .char-touch-t { -webkit-text-stroke: 2px currentColor; }
+        .hero-half.right .char-touch-o { }
+        .hero-half.right .char-touch-u { -webkit-text-stroke: 1px currentColor; }
+        .hero-half.right .char-touch-c { -webkit-text-stroke: 2px currentColor; }
+        .hero-half.right .char-touch-h { }
+
+        /* ALL行 */
+        .hero-half.right .hero-title .line-all {
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
+            display: flex;
+            align-items: baseline;
+            margin-left: 0;
+        }
+
+        .hero-half.right .char-all-a { -webkit-text-stroke: 1px currentColor; }
+        .hero-half.right .char-all-l1 { -webkit-text-stroke: 2px currentColor; }
+        .hero-half.right .char-all-l2 { -webkit-text-stroke: 2px currentColor; }
+
+        /* mINDS,行 */
+        .hero-half.right .hero-title .line-minds {
+            font-size: clamp(3.5rem, 7vw, 5.5rem);
+            display: flex;
+            align-items: baseline;
+        }
+
+        .hero-half.right .char-minds-m { 
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 0.55em;
+            position: relative;
+            top: 0.12em;
+        }
+        .hero-half.right .char-minds-i { }
+        .hero-half.right .char-minds-n { -webkit-text-stroke: 1px currentColor; }
+        .hero-half.right .char-minds-d { -webkit-text-stroke: 2px currentColor; }
+        .hero-half.right .char-minds-s { }
+        .hero-half.right .char-minds-comma { 
+            -webkit-text-stroke: 2px currentColor;
+            font-size: 1.3em;
+            position: relative;
+            top: -0.1em;
+            margin-left: -0.05em;
+        }
+
+        /* JUmP行（最重要） */
+        .hero-half.right .hero-title .line-jump {
+            font-size: clamp(4.5rem, 9vw, 7rem);
+            display: flex;
+            align-items: baseline;
+            margin-left: 0;
+            margin-top: 0.05em;
+            transform: scale(1.1);
+            transform-origin: left center;
+        }
+
+        .hero-half.right .char-jump-j { 
+            -webkit-text-stroke: 3px currentColor;
+            transform: scaleY(1.15);
+            transform-origin: top center;
+            position: relative;
+            top: 2px;
+        }
+        .hero-half.right .char-jump-u { }
+        .hero-half.right .char-jump-m { 
+            font-family: "Inter", sans-serif;
+            font-weight: 300;
+            font-size: 0.5em;
+            position: relative;
+            top: 0.15em;
+        }
+        .hero-half.right .char-jump-p { -webkit-text-stroke: 2px currentColor; }
+
+        /* CTA Buttons - ペールピンク背景＋白文字 */
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            border: none;
+            color: var(--white);
+            font-family: "Inter", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.15s ease;
+            background: var(--primary);
+            border-radius: 50px;
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-half.left .hero-btn {
+            left: 25%;
+            transform: translateX(-50%);
+        }
+
+        .hero-half.right .hero-btn {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .hero-btn .btn-m {
+            font-family: "Inter", sans-serif;
+            font-weight: 400;
+            font-size: 0.85em;
+            position: relative;
+            top: 0.05em;
+        }
+
+        /* ========== UI Layer - ボタン専用（文字と分離） ========== */
+        .ui-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .ui-layer .cross-btn {
+            position: absolute !important;
+            pointer-events: auto;
+            border-radius: 0 !important;
+            padding: 0 !important;
+            clip-path: polygon(
+                31% 0%, 69% 0%,
+                69% 31%,
+                100% 31%, 100% 69%,
+                69% 69%,
+                69% 100%, 31% 100%,
+                31% 69%,
+                0% 69%, 0% 31%,
+                31% 31%
+            );
+            width: 120px !important;
+            height: 120px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            transform: none !important;
+        }
+
+        .ui-layer .left-btn {
+            top: 8% !important;
+            left: 5% !important;
+            bottom: auto !important;
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .ui-layer .left-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px) !important;
+            box-shadow: 0 10px 30px rgba(255,143,171,0.3);
+        }
+
+        .ui-layer .right-btn {
+            top: 8% !important;
+            right: 5% !important;
+            left: auto !important;
+            bottom: auto !important;
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .ui-layer .right-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px) !important;
+            box-shadow: 0 10px 30px rgba(255,143,171,0.3);
+        }
+
+        /* ========== Responsive ========== */
+        @media (max-width: 768px) {
+            .split-hero {
+                flex-direction: column;
+            }
+            
+            .hero-half {
+                flex: 1;
+                align-items: center !important;
+                padding: 2rem !important;
+                justify-content: center;
+            }
+            
+            .hero-half.left {
+                padding-left: 2rem !important;
+                padding-right: 2rem !important;
+                padding-bottom: 4rem !important;
+                clip-path: polygon(
+                    0 0,
+                    100% 0,
+                    100% 84%,
+                    92% 84%,
+                    92% 88%,
+                    100% 88%,
+                    100% 80%,
+                    85% 80%,
+                    85% 92%,
+                    78% 92%,
+                    78% 86%,
+                    70% 86%,
+                    70% 94%,
+                    62% 94%,
+                    62% 82%,
+                    55% 82%,
+                    55% 90%,
+                    48% 90%,
+                    48% 84%,
+                    40% 84%,
+                    40% 96%,
+                    32% 96%,
+                    32% 88%,
+                    25% 88%,
+                    25% 94%,
+                    18% 94%,
+                    18% 86%,
+                    10% 86%,
+                    10% 92%,
+                    0 92%
+                );
+            }
+            
+            .hero-half.right {
+                padding-left: 2rem !important;
+                padding-right: 2rem !important;
+                padding-top: 4rem !important;
+                margin-left: 0;
+                margin-top: -3rem;
+            }
+            
+            .hero-title {
+                text-align: center !important;
+            }
+            
+            .hero-half.left .hero-title {
+                font-size: 4rem;
+                justify-content: center;
+            }
+            
+            .hero-half.right .hero-title {
+                align-items: center;
+            }
+            
+            .hero-subtitle {
+                margin-right: 0 !important;
+                text-align: center !important;
+            }
+            
+            .hero-half.right .hero-title .line-touch {
+                font-size: 2rem;
+            }
+            
+            .hero-half.right .hero-title .line-all {
+                font-size: 2rem;
+                margin-left: 0.2em;
+            }
+            
+            .hero-half.right .hero-title .line-minds {
+                font-size: 2rem;
+            }
+            
+            .hero-half.right .hero-title .line-jump {
+                font-size: 2.6rem;
+                margin-left: 0.3em;
+            }
+            
+            .split-hero:hover .hero-half:not(:hover),
+            .split-hero:hover .hero-half:hover {
+                flex: 1;
+            }
+
+            /* モバイル用UIレイヤー */
+            .ui-layer {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                padding: 2rem;
+                background: transparent;
+            }
+
+            .ui-layer .cross-btn {
+                position: relative;
+                bottom: auto;
+                left: auto !important;
+                margin-left: 0 !important;
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        /* ========== Partners Section ========== */
+        .partners-section {
+            padding: 6rem 2rem;
+            background: var(--white);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .partners-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .partners-label {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 1rem;
+            color: var(--primary);
+            letter-spacing: 0.3em;
+            margin-bottom: 0.5rem;
+        }
+
+        .partners-title {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            letter-spacing: 0.1em;
+            margin-bottom: 3rem;
+        }
+
+        .logo-slider {
+            overflow: hidden;
+            padding: 1rem 0;
+            position: relative;
+        }
+
+        .logo-slider::before,
+        .logo-slider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .logo-slider::before {
+            left: 0;
+            background: linear-gradient(to right, var(--white), transparent);
+        }
+
+        .logo-slider::after {
+            right: 0;
+            background: linear-gradient(to left, var(--white), transparent);
+        }
+
+        .logo-track {
+            display: flex;
+            gap: 2rem;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .logo-slider.reverse .logo-track {
+            animation: scroll-reverse 30s linear infinite;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        @keyframes scroll-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        .logo-item {
+            flex-shrink: 0;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .logo-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-item span {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--primary);
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        .logo-item img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .logo-item img.tamuji-logo {
+            filter: invert(1) hue-rotate(180deg) brightness(0.9);
+        }
+
+        .logo-item img.wakaba-logo {
+            max-width: 60%;
+            max-height: 60%;
+        }
+
+        .logo-item .tamuji-text {
+            text-align: center;
+            line-height: 1.2;
+        }
+        .logo-item .tamuji-text .main {
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #E60012;
+            display: block;
+        }
+        .logo-item .tamuji-text .sub {
+            font-family: "Inter", sans-serif;
+            font-size: 0.4rem;
+            font-weight: 400;
+            color: #666;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-top: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .partners-title {
+                font-size: 2rem;
+            }
+            .logo-item {
+                width: 90px;
+                height: 90px;
+            }
+            .logo-item span {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Split Hero Section -->
+    <section class="split-hero">
+        <div class="hero-half left">
+            <h1 class="hero-title">
+                <span class="char-t">T</span><span class="char-a">A</span><span class="char-m">m</span><span class="char-j">J</span>
+            </h1>
+            <p class="hero-subtitle left-subtitle">COMPANY</p>
+        </div>
+
+        <div class="hero-half right">
+            <h1 class="hero-title">
+                <span class="line-touch"><span class="char-touch-t">T</span><span class="char-touch-o">O</span><span class="char-touch-u">U</span><span class="char-touch-c">C</span><span class="char-touch-h">H</span></span>
+                <span class="line-all"><span class="char-all-a">A</span><span class="char-all-l1">L</span><span class="char-all-l2">L</span></span>
+                <span class="line-minds"><span class="char-minds-m">m</span><span class="char-minds-i">I</span><span class="char-minds-n">N</span><span class="char-minds-d">D</span><span class="char-minds-s">S</span></span>
+                <span class="line-jump"><span class="char-jump-j">J</span><span class="char-jump-u">U</span><span class="char-jump-m">m</span><span class="char-jump-p">P</span></span>
+            </h1>
+            <p class="hero-subtitle right-subtitle">歴史に触れ、次の一歩へ跳ぼう！</p>
+        </div>
+    </section>
+
+    <!-- UI Layer - ボタン専用レイヤー（文字と分離） -->
+    <div class="ui-layer">
+        <a href="about-company.html" class="hero-btn cross-btn left-btn">TOUCH</a>
+        <a href="home.html" class="hero-btn cross-btn right-btn">JU<span class="btn-m">m</span>P</a>
+    </div>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="partners-container">
+            <p class="partners-label">PARTNERS</p>
+            <h2 class="partners-title">HAPPY COMPANIONS</h2>
+            <div class="logo-slider">
+                <div class="logo-track">
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                </div>
+            </div>
+            <div class="logo-slider reverse">
+                <div class="logo-track">
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                    <div class="logo-item"><img src="goto-logo.png" alt="TAmJ"></div>
+                    <div class="logo-item"><img src="gotohappy.png" alt="GO TO HAPPY LIFE"></div>
+                    <div class="logo-item"><div class="tamuji-text"><span class="main">タムジ</span><span class="sub">TOUCH ALL mINDS JUmP</span></div></div>
+                    <div class="logo-item"><img src="compass-medical.png" alt="コンパスメディカルグループ"></div>
+                    <div class="logo-item"><img src="wakaba-pharmacy.png" class="wakaba-logo" alt="若葉薬局"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

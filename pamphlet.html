@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAmJ - パンフレット</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #E60012;
+      --primary-dark: #C5000F;
+      --text-dark: #1d1d1d;
+      --text-muted: #666666;
+      --text-light: #999999;
+      --bg-white: #ffffff;
+      --bg-light: #f8f8f8;
+      --border: #e0e0e0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: #e8e8e8;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(230, 0, 18, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      font-family: inherit;
+    }
+
+    .print-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      max-width: 297mm;
+      margin: 40px auto;
+      background: white;
+      box-shadow: 0 10px 60px rgba(0,0,0,0.15);
+    }
+
+    .page {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bg-white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page + .page {
+      border-top: 1px solid var(--border);
+    }
+
+    /* ===== PAGE 1: Cover ===== */
+    .page-cover {
+      display: flex;
+    }
+
+    .cover-left {
+      width: 55%;
+      padding: 20mm 25mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .cover-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cover-badge {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+
+    .cover-tagline {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+    }
+
+    .cover-main-text {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .cover-main-text .highlight {
+      color: var(--primary);
+    }
+
+    .cover-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .cover-brand {
+      margin-top: auto;
+    }
+
+    .cover-brand-name {
+      font-size: 26px;
+      color: var(--primary);
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .cover-brand-sub {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .cover-right {
+      width: 45%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20mm;
+    }
+
+    .cover-logo-large {
+      width: 160px;
+      height: auto;
+      filter: brightness(0) invert(1);
+      margin-bottom: 20px;
+    }
+
+    .cover-logo-text {
+      font-size: 48px;
+      color: white;
+      font-weight: 900;
+      letter-spacing: 6px;
+    }
+
+    .cover-logo-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+      margin-top: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* ===== PAGE 2: Business ===== */
+    .page-business {
+      position: relative;
+      background: white;
+    }
+
+    .business-stripe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 45%;
+      height: 100%;
+      background: var(--primary);
+      clip-path: polygon(0 0, 100% 0, 60% 100%, 0 100%);
+      z-index: 2;
+    }
+
+    .business-left-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 38%;
+      height: 100%;
+      padding: 18mm 15mm 18mm 18mm;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .business-section-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 5px 12px;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .business-main-title-horizontal {
+      font-size: 52px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .business-sub-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.8;
+    }
+
+    .business-right {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 55%;
+      height: 100%;
+      padding: 10mm 12mm 10mm 15mm;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .business-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10mm;
+    }
+
+    .business-header-logo {
+      width: 40px;
+      margin-right: 12px;
+    }
+
+    .business-header-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .business-cards {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .business-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .business-card:last-child {
+      border-bottom: none;
+    }
+
+    .business-card-label {
+      width: 65px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .business-card-label span {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.3;
+      display: block;
+    }
+
+    .business-card-content {
+      flex: 1;
+    }
+
+    .business-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .business-card h3 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .business-card .tag {
+      font-size: 9px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: #eee;
+      color: #888;
+    }
+
+    .business-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .page-number {
+      position: absolute;
+      bottom: 10mm;
+      right: 12mm;
+      font-size: 18px;
+      color: var(--primary);
+      font-weight: 700;
+      z-index: 10;
+    }
+
+    /* ===== PAGE 3: Collaboration ===== */
+    .page-collaboration {
+      display: flex;
+    }
+
+    .collaboration-left {
+      width: 35%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20mm 15mm;
+      text-align: center;
+    }
+
+    .collaboration-badge {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .collaboration-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: white;
+      line-height: 1.4;
+    }
+
+    .collaboration-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.7;
+      margin-top: 25px;
+    }
+
+    .collaboration-right {
+      width: 65%;
+      padding: 12mm 15mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .collaboration-cards {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .collaboration-card {
+      flex: 1;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .collaboration-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--primary);
+      line-height: 1.4;
+    }
+
+    .collaboration-card p {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .collaboration-city {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      min-height: 100px;
+    }
+
+    .collaboration-city img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(1.2);
+    }
+
+    .collaboration-city-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 100%);
+    }
+
+    .collaboration-city-text {
+      position: absolute;
+      bottom: 18px;
+      left: 20px;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .collaboration-city-text p {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .collaboration-city-text h3 {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    /* ===== PAGE 4: Contact & Company ===== */
+    .page-contact {
+      display: flex;
+    }
+
+    .contact-left {
+      width: 45%;
+      background: white;
+      padding: 15mm 20mm;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+    }
+
+    .company-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid var(--primary);
+    }
+
+    .company-header-logo {
+      width: 40px;
+      margin-right: 12px;
+    }
+
+    .company-header-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .company-info {
+      margin-bottom: 0;
+    }
+
+    .company-row {
+      display: flex;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .company-row:last-child {
+      border-bottom: none;
+    }
+
+    .company-label {
+      width: 90px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .company-value {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text-dark);
+    }
+
+    .ceo-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: auto;
+      padding: 15px 0;
+    }
+
+    .company-stats {
+      display: flex;
+      justify-content: space-between;
+      background: #2a3441;
+      border-radius: 12px;
+      padding: 20px 15px;
+      margin-top: 15px;
+    }
+
+    .stat-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 32px;
+      font-weight: 900;
+      color: #f27a8e;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 10px;
+      color: white;
+      letter-spacing: 0.5px;
+    }
+
+    .ceo-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .ceo-info h4 {
+      font-size: 11px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .ceo-info p {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--text-dark);
+    }
+
+    .contact-right {
+      width: 55%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 15mm 20mm;
+      display: flex;
+      flex-direction: column;
+      color: white;
+    }
+
+    .contact-stats {
+      display: flex;
+      justify-content: space-between;
+      flex: 1;
+      align-items: center;
+    }
+
+    .contact-stat-item {
+      text-align: center;
+      flex: 1;
+    }
+
+    .contact-stat-number {
+      display: block;
+      font-size: 48px;
+      font-weight: 900;
+      color: white;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .contact-stat-label {
+      display: block;
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      letter-spacing: 0.5px;
+    }
+
+    .contact-info-bottom {
+      margin-top: auto;
+    }
+
+    .contact-title {
+      font-size: 20px;
+      font-weight: 900;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+      margin-bottom: 15px;
+    }
+
+    .contact-item {
+      margin-bottom: 15px;
+    }
+
+    .contact-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-item-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 5px;
+    }
+
+    .contact-email {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .contact-web {
+      font-size: 18px;
+    }
+
+    .contact-address {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .contact-tagline {
+      font-size: 18px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      line-height: 1.6;
+    }
+
+    /* ===== Print Styles ===== */
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 0;
+      }
+
+      body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .print-button {
+        display: none !important;
+      }
+
+      .container {
+        margin: 0;
+        box-shadow: none;
+        max-width: none;
+      }
+
+      .page {
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      .cover-right,
+      .contact-right,
+      .collaboration-left,
+      .business-stripe,
+      .collaboration-card,
+      .collaboration-city,
+      .company-stats,
+      .contact-stats {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+      .container {
+        margin: 20px auto;
+        transform: scale(0.45);
+        transform-origin: top center;
+      }
+
+      .print-button {
+        top: 10px;
+        right: 10px;
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button" onclick="window.print()">PDFで印刷</button>
+
+  <div class="container">
+    <!-- PAGE 1: Cover -->
+    <div class="page page-cover">
+      <div class="cover-left">
+        <div class="cover-content">
+          <p class="cover-tagline">医療・介護・金融・エンターテインメント</p>
+          <h1 class="cover-main-text">
+            社会インフラの<br>
+            <span class="highlight">未来</span>を創る。
+          </h1>
+          <p class="cover-desc">
+            介護施設・病院の開発から、<br>
+            金融ソリューション、エンタメ事業まで。<br>
+            TAmJは新しい価値を創造します。
+          </p>
+        </div>
+
+        <div class="cover-brand">
+          <p class="cover-brand-name">TAmJ</p>
+          <p class="cover-brand-sub">TOUCH ALL mINDS JUmP</p>
+        </div>
+      </div>
+
+      <div class="cover-right">
+        <img src="logo.png" alt="TAmJ Logo" class="cover-logo-large">
+        <p class="cover-logo-text">タムジ</p>
+        <p class="cover-logo-sub">TOUCH ALL mINDS JUmP</p>
+      </div>
+    </div>
+
+    <!-- PAGE 2: Business -->
+    <div class="page page-business">
+      <div class="business-stripe"></div>
+      
+      <div class="business-left-content">
+        <div class="business-section-label">4 BUSINESS</div>
+        <h2 class="business-main-title-horizontal">
+          4つの事業<br>
+          で、<br>
+          未来を創<br>
+          る。
+        </h2>
+        <p class="business-sub-text">
+          構想を形に、現場を変革し、<br>
+          体験で心を動かす。<br>
+          TAmJは4つの事業領域で<br>
+          社会に新しい価値を届けます。
+        </p>
+      </div>
+
+      <div class="business-right">
+        <header class="business-header">
+          <img src="logo.png" alt="TAmJ" class="business-header-logo">
+          <h2 class="business-header-title">事業内容</h2>
+        </header>
+
+        <div class="business-cards">
+          <div class="business-card">
+            <div class="business-card-label">
+              <span>PLANNING</span>
+              <span>CF</span>
+            </div>
+            <div class="business-card-content">
+              <div class="business-card-header">
+                <h3>「好き！」を突き詰め、ファンの心を動かそう。</h3>
+              </div>
+              <p>構想と共感を動かす。未達でも止まらないクラウドファンディング。<br>まずは自分から熱狂しよう。愛と情熱でファンを育てていこう。</p>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-card-label">
+              <span>DEVELOP</span>
+              <span>MENT</span>
+            </div>
+            <div class="business-card-content">
+              <div class="business-card-header">
+                <h3>介護・医療施設の一気通貫開発。</h3>
+              </div>
+              <p>設計→申請→施工→開業まで。結果を出すまでやり抜き、期待を超えていく。<br>経営者マインドを持って、ビジネスを動かそう。</p>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-card-label">
+              <span>MEDICAL</span>
+              <span>PRO</span>
+            </div>
+            <div class="business-card-content">
+              <div class="business-card-header">
+                <h3>現場から命の構造を組み替える。</h3>
+                <span class="tag">COMING SOON</span>
+              </div>
+              <p>医療・救急・在宅の現場設計。社会をより良くするために、惜しみなく情熱を燃やす。<br>高い視座を持ち社会のあらゆる課題に立ち向かおう。</p>
+            </div>
+          </div>
+
+          <div class="business-card">
+            <div class="business-card-label">
+              <span>ENTERTAIN</span>
+              <span>MENT</span>
+            </div>
+            <div class="business-card-content">
+              <div class="business-card-header">
+                <h3>体験で人の行動を動かす。</h3>
+                <span class="tag">COMING SOON</span>
+              </div>
+              <p>エンタメ・IP企画と参加型体験設計。互いに越境して多様性をスパークさせよう。<br>多様な個性を化学反応させて新しい価値を生み出そう。</p>
+            </div>
+          </div>
+        </div>
+
+        <span class="page-number">01</span>
+      </div>
+    </div>
+
+    <!-- PAGE 3: Collaboration -->
+    <div class="page page-collaboration">
+      <div class="collaboration-left">
+        <p class="collaboration-badge">COLLABORATION</p>
+        <h2 class="collaboration-title">
+          世界と<br>
+          共同作業で<br>
+          価値を<br>
+          創造する。
+        </h2>
+        <p class="collaboration-desc">
+          多様なパートナーとの<br>
+          協働により、<br>
+          より大きな価値を生み出します。
+        </p>
+      </div>
+
+      <div class="collaboration-right">
+        <div class="collaboration-cards">
+          <div class="collaboration-card">
+            <h4>歴史と<br>共同作業</h4>
+            <p>過去の知恵と経験から学び、歴史が築いてきた価値を未来へと繋げる事業を推進します。</p>
+          </div>
+
+          <div class="collaboration-card">
+            <h4>患者と<br>共同作業</h4>
+            <p>現場の声に耳を傾け、患者目線でサービスを設計し、本当に必要とされる価値を届けます。</p>
+          </div>
+
+          <div class="collaboration-card">
+            <h4>ド素人と<br>共同作業</h4>
+            <p>専門外の視点を大切にし、常識にとらわれない発想で新しい価値を生み出します。</p>
+          </div>
+        </div>
+
+        <div class="collaboration-city">
+          <img src="city.png" alt="Future City">
+        </div>
+
+        <span class="page-number">02</span>
+      </div>
+    </div>
+
+    <!-- PAGE 4: Company & Contact -->
+    <div class="page page-contact">
+      <div class="contact-left">
+        <header class="company-header">
+          <img src="logo.png" alt="TAmJ" class="company-header-logo">
+          <h2 class="company-header-title">会社概要</h2>
+        </header>
+
+        <div class="company-info">
+          <div class="company-row">
+            <span class="company-label">COMPANY</span>
+            <span class="company-value">タムジ株式会社</span>
+          </div>
+          <div class="company-row">
+            <span class="company-label">FOUNDED</span>
+            <span class="company-value">2020年3月</span>
+          </div>
+          <div class="company-row">
+            <span class="company-label">BUSINESS</span>
+            <span class="company-value">医療・介護・開発・再生・エンタメ</span>
+          </div>
+        </div>
+
+        <div class="ceo-section">
+          <img src="ceo-avatar.png" alt="CEO" class="ceo-avatar">
+          <div class="ceo-info">
+            <h4>CEO</h4>
+            <p><img src="flag-usa.png" alt="US" style="height:14px;vertical-align:middle;margin-right:4px;">TIGER.J.BOB</p>
+            <p style="font-size:11px;color:#666;margin-top:2px;"><img src="flag-japan.png" alt="JP" style="height:12px;vertical-align:middle;margin-right:4px;">JIN.OSHITA</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div class="contact-stats">
+          <div class="contact-stat-item">
+            <span class="contact-stat-number">4</span>
+            <span class="contact-stat-label">事業領域</span>
+          </div>
+          <div class="contact-stat-item">
+            <span class="contact-stat-number">4</span>
+            <span class="contact-stat-label">展開国</span>
+          </div>
+          <div class="contact-stat-item">
+            <span class="contact-stat-number">11</span>
+            <span class="contact-stat-label">チームメンバー</span>
+          </div>
+          <div class="contact-stat-item">
+            <span class="contact-stat-number">∞</span>
+            <span class="contact-stat-label">可能性</span>
+          </div>
+        </div>
+
+        <div class="contact-info-bottom">
+          <h3 class="contact-title">お問い合わせ</h3>
+          
+          <div class="contact-item">
+            <p class="contact-item-label">EMAIL</p>
+            <p class="contact-email">info@tamjump.com</p>
+          </div>
+
+          <div class="contact-item">
+            <p class="contact-item-label">ADDRESS</p>
+            <p class="contact-address">
+              〒103-0004<br>
+              東京都中央区東日本橋3-3-17
+            </p>
+          </div>
+        </div>
+
+        <span class="page-number" style="color: white;">03</span>
+      </div>
+    </div>
+  </div>
+
+  <scri

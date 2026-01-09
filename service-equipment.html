@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>什器備品選定 | DEVELOPMENT Pro | TAmJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E60012;
+            
+            --primary-dark: #C5000F;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+            --off-white: #ffffff;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: "Inter", "Helvetica Neue", sans-serif;
+            line-height: 1.6; 
+            color: var(--dark);
+            background: #ffffff;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        header {
+            background: var(--white);
+            padding: 0.8rem 1.5rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .logo .char-m { font-family: "Inter", sans-serif; font-weight: 300; font-size: 0.6em; }
+        nav { display: flex; gap: 1.5rem; }
+        nav a { color: var(--dark); font-size: 0.8rem; font-weight: 500; }
+        nav a:hover { color: var(--primary); }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 6rem 1.5rem 2rem;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .hero h1 { font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 700; margin-bottom: 0.5rem; }
+        .hero p { font-size: 0.9rem; opacity: 0.9; max-width: 650px; margin: 0 auto; }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        /* 入居者数入力 */
+        .bed-input-section {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .bed-input-section h3 {
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        .bed-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .bed-input {
+            width: 100px;
+            padding: 0.6rem 0.8rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            color: var(--dark);
+        }
+        .bed-input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+        }
+        .bed-unit {
+            font-size: 1rem;
+            color: var(--gray-text);
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 0.4rem;
+        }
+        .preset-btn {
+            padding: 0.4rem 0.8rem;
+            border: 2px solid var(--primary);
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* モデル選択タブ */
+        .model-tabs {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .model-tab {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: var(--dark);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        .model-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+        }
+        .model-tab.active {
+            background: var(--white);
+            color: white;
+        }
+        .model-tab.entry.active { background: var(--primary); color: var(--dark); }
+        .model-tab.middle.active { background: var(--primary); color: white; }
+        .model-tab.highend.active { background: linear-gradient(135deg, var(--primary-dark), #be185d); color: white; }
+
+        /* 合計金額表示 */
+        .total-display {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            text-align: center;
+            position: sticky;
+            top: 60px;
+            z-index: 100;
+            border: 2px solid var(--pale);
+        }
+        .total-display h2 {
+            font-size: 1rem;
+            color: var(--gray-text);
+            margin-bottom: 0.3rem;
+        }
+        .total-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .total-amount .tax {
+            font-size: 0.85rem;
+            color: var(--gray-text);
+            font-weight: normal;
+        }
+        .total-breakdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .breakdown-item {
+            text-align: center;
+        }
+        .breakdown-item .label {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+        }
+        .breakdown-item .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* カテゴリセクション */
+        .category-section {
+            background: white;
+            border-radius: 14px;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+        .category-header {
+            background: linear-gradient(135deg, #E60012, #C5000F);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .category-header:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #be185d);
+        }
+        .category-header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .category-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--dark);
+            cursor: pointer;
+        }
+        .category-header h3 {
+            color: white;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .category-header .icon {
+            font-size: 1.2rem;
+        }
+        .category-total {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--dark);
+            background: rgba(255,255,255,0.9);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+        }
+        .category-toggle {
+            font-size: 1.2rem;
+            color: white;
+            transition: transform 0.3s;
+            margin-left: 0.8rem;
+        }
+        .category-section.collapsed .category-toggle {
+            transform: rotate(-90deg);
+        }
+        .category-content {
+            padding: 0;
+            max-height: 5000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s;
+        }
+        .category-section.collapsed .category-content {
+            max-height: 0;
+            padding: 0;
+        }
+
+        .subcategory {
+            border-bottom: 1px solid var(--border);
+        }
+        .subcategory:last-child {
+            border-bottom: none;
+        }
+        .subcategory-header {
+            padding: 0.8rem 1.5rem;
+            background: var(--off-white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        .subcategory-total {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .item-row {
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 0.8rem;
+            padding: 0.7rem 1.5rem;
+            align-items: center;
+            border-bottom: 1px solid #f5f5f5;
+            transition: background 0.2s, opacity 0.2s;
+            font-size: 0.85rem;
+        }
+        .item-row:hover {
+            background: var(--off-white);
+        }
+        .item-row:last-child {
+            border-bottom: none;
+        }
+        .item-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .item-name {
+            color: var(--dark);
+        }
+        .item-qty {
+            text-align: center;
+            color: var(--gray-text);
+            font-size: 0.8rem;
+            min-width: 60px;
+            background: #f5f5f5;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+        }
+        .item-price {
+            text-align: right;
+            font-weight: 600;
+            color: var(--dark);
+            min-width: 100px;
+        }
+        .item-row.disabled {
+            opacity: 0.4;
+        }
+        .item-row.disabled .item-price {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        /* アクションボタン */
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+        .action-btn.primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+        }
+        .action-btn.secondary {
+            background: white;
+            color: var(--dark);
+            border: 2px solid var(--dark);
+        }
+        .action-btn.secondary:hover {
+            background: var(--white);
+            color: white;
+        }
+
+        /* 凡例 */
+        .legend {
+            background: white;
+            border-radius: 14px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        }
+        .legend h4 {
+            color: var(--dark);
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+        }
+        .legend-items {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+        }
+        .legend-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+        .legend-badge.entry { background: var(--pale); color: var(--primary-dark); }
+        .legend-badge.middle { background: var(--primary); color: white; }
+        .legend-badge.highend { background: linear-gradient(135deg, var(--primary-dark), #be185d); color: white; }
+
+        footer {
+            background: var(--white);
+            color: white;
+            padding: 2rem 1.5rem 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .footer-bottom {
+            font-size: 0.8rem;
+            color: var(--gray-text);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0.6rem 1rem; }
+            .hero { padding: 5rem 1rem 1.5rem; }
+            .hero h1 { font-size: 1.3rem; }
+            .main-content { padding: 1rem 0.5rem; }
+            .bed-input-section { flex-direction: column; gap: 0.8rem; padding: 1rem; }
+            .model-tabs { gap: 0.4rem; }
+            .model-tab { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+            .total-display { padding: 1rem; }
+            .total-amount { font-size: 1.6rem; }
+            .category-header { padding: 0.8rem 1rem; flex-wrap: wrap; gap: 0.4rem; }
+            .category-header h3 { font-size: 0.95rem; }
+            .item-row {
+                grid-template-columns: auto 1fr auto;
+                gap: 0.4rem;
+                padding: 0.6rem 0.8rem;
+            }
+            .item-qty { min-width: 50px; font-size: 0.75rem; }
+            .item-price { min-width: 80px; font-size: 0.8rem; }
+            nav { display: none; }
+            .total-breakdown { gap: 1rem; }
+        }
+
+        @media print {
+            header, .model-tabs, .action-buttons, footer, .bed-input-section, .legend { display: none; }
+            .hero { padding: 1.5rem; margin-top: 0; }
+            .category-section { break-inside: avoid; }
+            .total-display { position: static; }
+            .item-row.disabled { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="home.html" class="logo"><img src="logo.png" alt="TAmJ" style="height: 28px;"></a>
+            <nav>
+                <a href="home.html">ホーム</a>
+                <a href="services.html">サービス</a>
+                <a href="service-development.html">開発シミュレーション</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>🪑 什器備品選定</h1>
+        <p>施設の規模やニーズに合わせて、最適な設備プランをご提案いたします</p>
+    </section>
+
+    <main class="main-content">
+        <!-- 入居者数入力 -->
+        <div class="bed-input-section">
+            <h3>🛏️ 施設規模（入居者数）</h3>
+            <div class="bed-input-wrapper">
+                <input type="number" id="bedCount" class="bed-input" value="50" min="1" max="500" onchange="updateBedCount()">
+                <span class="bed-unit">人</span>
+            </div>
+            <div class="preset-buttons">
+                <button class="preset-btn" onclick="setBedCount(30)">30人</button>
+                <button class="preset-btn" onclick="setBedCount(50)">50人</button>
+                <button class="preset-btn" onclick="setBedCount(100)">100人</button>
+                <button class="preset-btn" onclick="setBedCount(150)">150人</button>
+            </div>
+        </div>
+
+        <!-- モデル選択タブ -->
+        <div class="model-tabs">
+            <button class="model-tab entry active" onclick="selectModel('entry')">
+                🌱 エントリー
+            </button>
+            <button class="model-tab middle" onclick="selectModel('middle')">
+                ⭐ ミドル
+            </button>
+            <button class="model-tab highend" onclick="selectModel('highend')">
+                👑 ハイエンド
+            </button>
+        </div>
+
+        <!-- 凡例 -->
+        <div class="legend">
+            <h4>グレード別価格について</h4>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <span class="legend-badge entry">エントリー</span>
+                    <span>コストを抑えた基本構成</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge middle">ミドル</span>
+                    <span>バランスの取れた標準構成</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-badge highend">ハイエンド</span>
+                    <span>最高品質の充実構成</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 合計金額表示 -->
+        <div class="total-display">
+            <h2>お見積り合計金額（<span id="displayBedCount">50</span>人）</h2>
+            <div class="total-amount">
+                ¥<span id="totalAmount">0</span>
+                <span class="tax">（税込）</span>
+            </div>
+            <div class="total-breakdown">
+                <div class="breakdown-item">
+                    <div class="label">税抜金額</div>
+                    <div class="value">¥<span id="subtotal">0</span></div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="label">消費税(10%)</div>
+                    <div class="value">¥<span id="taxAmount">0</span></div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="label">選択項目数</div>
+                    <div class="value"><span id="selectedCount">0</span> 件</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- カテゴリセクション -->
+        <div id="categories-container">
+            <!-- JavaScriptで動的に生成 -->
+        </div>
+
+        <!-- アクションボタン -->
+        <div class="action-buttons">
+            <button class="action-btn secondary" onclick="resetAll()">🔄 リセット</button>
+            <button class="action-btn secondary" onclick="selectAll()">✅ 全て選択</button>
+            <button class="action-btn primary" onclick="printEstimate()">📄 見積書を印刷</button>
+            <a href="service-development.html" class="action-btn secondary">← シミュレーションに戻る</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2024 TAmJ All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 入居者数
+        let bedCount = 50;
+
+        // 見積データ定義
+        const estimateData = {
+            categories: [
+                {
+                    id: 'furniture',
+                    name: '家具・什器',
+                    icon: '🪑',
+                    subcategories: [
+                        {
+                            name: '玄関・共用部',
+                            items: [
+                                { name: '傘立て', qtyType: 'fixed', baseQty: 1, entry: 21100, middle: 44850, highend: 89700 },
+                                { name: 'ロープルスツール（肘付き）', qtyType: 'fixed', baseQty: 2, entry: 24300, middle: 48600, highend: 97200 },
+                                { name: '3人掛けソファ', qtyType: 'fixed', baseQty: 1, entry: 72500, middle: 145145, highend: 290290 },
+                                { name: '1人掛けソファ', qtyType: 'perFloor', baseQty: 2, entry: 58500, middle: 117000, highend: 234000 },
+                                { name: 'ローテーブル（楕円）', qtyType: 'fixed', baseQty: 1, entry: 17950, middle: 35910, highend: 71820 },
+                                { name: 'ローテーブル（円形）', qtyType: 'perFloor', baseQty: 1, entry: 13050, middle: 26100, highend: 52200 }
+                            ]
+                        },
+                        {
+                            name: '事務室',
+                            items: [
+                                { name: '電動昇降デスク', qtyType: 'fixed', baseQty: 3, entry: 39375, middle: 78750, highend: 236250 },
+                                { name: 'ワゴン（3段）', qtyType: 'fixed', baseQty: 3, entry: 22680, middle: 68040, highend: 136080 },
+                                { name: '回転椅子', qtyType: 'ratio', baseQty: 0.1, entry: 17910, middle: 53730, highend: 161190 },
+                                { name: 'ワークテーブル', qtyType: 'fixed', baseQty: 3, entry: 53550, middle: 160650, highend: 321300 },
+                                { name: 'ハイカウンター', qtyType: 'fixed', baseQty: 1, entry: 17700, middle: 35415, highend: 70830 },
+                                { name: 'キャビネット（ラテラル3段）', qtyType: 'fixed', baseQty: 3, entry: 51345, middle: 154035, highend: 308070 },
+                                { name: 'キャビネット（両開）', qtyType: 'fixed', baseQty: 4, entry: 26010, middle: 104040, highend: 208080 }
+                            ]
+                        },
+                        {
+                            name: '相談室',
+                            items: [
+                                { name: '会議テーブル', qtyType: 'fixed', baseQty: 1, entry: 37800, middle: 75600, highend: 151200 },
+                                { name: 'チェア（肘なし）', qtyType: 'fixed', baseQty: 6, entry: 28260, middle: 169560, highend: 339120 },
+                                { name: 'キャビネット', qtyType: 'fixed', baseQty: 1, entry: 27880, middle: 55760, highend: 111520 }
+                            ]
+                        },
+                        {
+                            name: '健康管理室',
+                            items: [
+                                { name: '平デスク', qtyType: 'fixed', baseQty: 2, entry: 19835, middle: 39669, highend: 79338 },
+                                { name: 'ワゴン', qtyType: 'fixed', baseQty: 2, entry: 16785, middle: 33570, highend: 67140 },
+                                { name: 'ドクター用チェア', qtyType: 'fixed', baseQty: 1, entry: 22005, middle: 44010, highend: 88020 },
+                                { name: '診察台', qtyType: 'fixed', baseQty: 1, entry: 20150, middle: 40300, highend: 80600 },
+                                { name: 'スクリーンパーティション', qtyType: 'fixed', baseQty: 1, entry: 8725, middle: 17450, highend: 34900 }
+                            ]
+                        },
+                        {
+                            name: 'スタッフ休憩室',
+                            items: [
+                                { name: 'テーブル', qtyType: 'fixed', baseQty: 2, entry: 20205, middle: 40410, highend: 80820 },
+                                { name: 'チェア', qtyType: 'ratio', baseQty: 0.1, entry: 12960, middle: 25920, highend: 51840 },
+                                { name: 'キッチンボード', qtyType: 'fixed', baseQty: 1, entry: 14525, middle: 29250, highend: 58500 }
+                            ]
+                        },
+                        {
+                            name: '更衣室',
+                            items: [
+                                { name: 'ロッカー', qtyType: 'ratio', baseQty: 0.15, entry: 40860, middle: 81720, highend: 163440 },
+                                { name: '丸スツール', qtyType: 'fixed', baseQty: 5, entry: 2790, middle: 13950, highend: 27900 },
+                                { name: 'ハンガーラック', qtyType: 'fixed', baseQty: 2, entry: 13840, middle: 27680, highend: 55360 }
+                            ]
+                        },
+                        {
+                            name: 'ダイニング・共用部',
+                            items: [
+                                { name: 'ダイニングテーブル', qtyType: 'ratio', baseQty: 0.3, entry: 59400, middle: 118800, highend: 237600 },
+                                { name: 'ダイニングチェア（肘付き）', qtyType: 'perBed', baseQty: 1.2, entry: 23400, middle: 46800, highend: 93600 },
+                                { name: 'ソファ（1人用）', qtyType: 'perFloor', baseQty: 4, entry: 85500, middle: 171000, highend: 342000 },
+                                { name: 'センターテーブル', qtyType: 'perFloor', baseQty: 3, entry: 28800, middle: 57600, highend: 115200 },
+                                { name: 'キッチンボード', qtyType: 'perFloor', baseQty: 2, entry: 40050, middle: 80100, highend: 160200 }
+                            ]
+                        },
+                        {
+                            name: '倉庫・リネン庫',
+                            items: [
+                                { name: 'ラック（大）', qtyType: 'perFloor', baseQty: 4, entry: 22770, middle: 45540, highend: 91080 },
+                                { name: 'ラック（中）', qtyType: 'perFloor', baseQty: 6, entry: 18405, middle: 36810, highend: 73620 },
+                                { name: 'ラック（小）', qtyType: 'perFloor', baseQty: 4, entry: 16065, middle: 32130, highend: 64260 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'kitchen',
+                    name: '厨房設備',
+                    icon: '🍳',
+                    subcategories: [
+                        {
+                            name: '食品庫',
+                            items: [
+                                { name: 'タテ型冷凍冷蔵庫', qtyType: 'fixed', baseQty: 1, entry: 585500, middle: 1171000, highend: 1756500 },
+                                { name: '検食用フリーザー', qtyType: 'fixed', baseQty: 1, entry: 224000, middle: 448000, highend: 672000 },
+                                { name: 'シェルフ', qtyType: 'fixed', baseQty: 3, entry: 48500, middle: 97000, highend: 194000 }
+                            ]
+                        },
+                        {
+                            name: '下処理',
+                            items: [
+                                { name: '二槽シンク', qtyType: 'fixed', baseQty: 1, entry: 49500, middle: 99000, highend: 148500 },
+                                { name: '作業台', qtyType: 'fixed', baseQty: 2, entry: 30500, middle: 61000, highend: 122000 },
+                                { name: 'パススルー冷凍庫', qtyType: 'fixed', baseQty: 1, entry: 707000, middle: 1414000, highend: 2121000 },
+                                { name: 'パススルー冷蔵庫', qtyType: 'fixed', baseQty: 1, entry: 1024500, middle: 2049000, highend: 3073500 }
+                            ]
+                        },
+                        {
+                            name: '厨房＆配膳',
+                            items: [
+                                { name: 'ヨコ型冷蔵庫', qtyType: 'fixed', baseQty: 3, entry: 389667, middle: 779333, highend: 1169000 },
+                                { name: 'ブラストチラー', qtyType: 'fixed', baseQty: 1, entry: 900000, middle: 1800000, highend: 2700000 },
+                                { name: 'IH炊飯ジャー', qtyType: 'fixed', baseQty: 3, entry: 85600, middle: 171200, highend: 342400 },
+                                { name: 'ガステーブル', qtyType: 'fixed', baseQty: 1, entry: 120000, middle: 240000, highend: 360000 },
+                                { name: 'スチームコンベクションオーブン', qtyType: 'fixed', baseQty: 1, entry: 1340000, middle: 2680000, highend: 4020000 },
+                                { name: '配膳車', qtyType: 'ratio', baseQty: 0.04, entry: 1983500, middle: 3967000, highend: 5950500 },
+                                { name: '適温配膳車', qtyType: 'fixed', baseQty: 1, entry: 1450000, middle: 2900000, highend: 4350000 }
+                            ]
+                        },
+                        {
+                            name: '洗浄',
+                            items: [
+                                { name: 'ソイルドシンク', qtyType: 'fixed', baseQty: 1, entry: 140000, middle: 280000, highend: 420000 },
+                                { name: '食器洗浄機', qtyType: 'fixed', baseQty: 1, entry: 710000, middle: 1420000, highend: 2130000 },
+                                { name: '食器消毒保管庫', qtyType: 'fixed', baseQty: 1, entry: 470000, middle: 940000, highend: 1410000 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'general',
+                    name: '一般備品',
+                    icon: '🧹',
+                    subcategories: [
+                        {
+                            name: '生活備品',
+                            items: [
+                                { name: '体重計', qtyType: 'perFloor', baseQty: 1, entry: 1150, middle: 2300, highend: 4600 },
+                                { name: '室温計', qtyType: 'perFloor', baseQty: 2, entry: 900, middle: 1800, highend: 3600 },
+                                { name: 'ドライヤー', qtyType: 'perFloor', baseQty: 2, entry: 1000, middle: 2000, highend: 4000 },
+                                { name: 'コードレス掃除機', qtyType: 'perFloor', baseQty: 2, entry: 5950, middle: 11900, highend: 23800 }
+                            ]
+                        },
+                        {
+                            name: '搬入設置費',
+                            items: [
+                                { name: '搬入設置費一式', qtyType: 'fixed', baseQty: 1, entry: 100000, middle: 200000, highend: 400000 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'medical',
+                    name: '医療・介護用品',
+                    icon: '🏥',
+                    subcategories: [
+                        {
+                            name: '測定機器',
+                            items: [
+                                { name: '聴診器', qtyType: 'perFloor', baseQty: 2, entry: 822, middle: 1644, highend: 3288 },
+                                { name: '手首血圧計', qtyType: 'perFloor', baseQty: 2, entry: 2092, middle: 4184, highend: 8368 },
+                                { name: '非接触体温計', qtyType: 'perFloor', baseQty: 2, entry: 3300, middle: 6600, highend: 13200 },
+                                { name: 'パルスオキシメーター', qtyType: 'perFloor', baseQty: 2, entry: 9770, middle: 19540, highend: 39080 }
+                            ]
+                        },
+                        {
+                            name: '回診車・カート',
+                            items: [
+                                { name: '回診車', qtyType: 'perFloor', baseQty: 1, entry: 29885, middle: 59770, highend: 119540 },
+                                { name: 'ナーシングカート', qtyType: 'perFloor', baseQty: 1, entry: 32874, middle: 65747, highend: 131494 },
+                                { name: 'ミニワゴン', qtyType: 'perFloor', baseQty: 1, entry: 11207, middle: 22414, highend: 44828 }
+                            ]
+                        },
+                        {
+                            name: '救急用品',
+                            items: [
+                                { name: '救急蘇生ケース', qtyType: 'perFloor', baseQty: 2, entry: 15690, middle: 31379, highend: 62758 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'bath',
+                    name: '特殊浴槽設備',
+                    icon: '🛁',
+                    subcategories: [
+                        {
+                            name: '特殊浴槽',
+                            items: [
+                                { name: 'エレベートバス', qtyType: 'fixed', baseQty: 1, entry: 1089000, middle: 2178000, highend: 3267000 },
+                                { name: '気泡浴装置', qtyType: 'fixed', baseQty: 1, entry: 60500, middle: 121000, highend: 181500 },
+                                { name: '担架', qtyType: 'fixed', baseQty: 1, entry: 231000, middle: 462000, highend: 693000 },
+                                { name: 'ストレッチャー', qtyType: 'fixed', baseQty: 1, entry: 396000, middle: 792000, highend: 1188000 }
+                            ]
+                        },
+                        {
+                            name: 'ミスト浴',
+                            items: [
+                                { name: 'シャワー入浴装置', qtyType: 'fixed', baseQty: 1, entry: 1825000, middle: 3650000, highend: 5475000 },
+                                { name: 'ストレッチャー', qtyType: 'fixed', baseQty: 1, entry: 1020000, middle: 2040000, highend: 3060000 }
+                            ]
+                        },
+                        {
+                            name: '搬入設置費',
+                            items: [
+                                { name: '取付・運送・設置費', qtyType: 'fixed', baseQty: 1, entry: 164000, middle: 328000, highend: 656000 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'it',
+                    name: 'IT・通信設備',
+                    icon: '💻',
+                    subcategories: [
+                        {
+                            name: 'ネットワーク機器',
+                            items: [
+                                { name: 'L3スイッチ', qtyType: 'fixed', baseQty: 1, entry: 396000, middle: 792000, highend: 1188000 },
+                                { name: 'L2スイッチ（各階）', qtyType: 'perFloor', baseQty: 2, entry: 218400, middle: 436800, highend: 873600 },
+                                { name: 'ネットワーク導入支援', qtyType: 'fixed', baseQty: 1, entry: 250000, middle: 500000, highend: 750000 }
+                            ]
+                        },
+                        {
+                            name: 'Wi-Fi設備',
+                            items: [
+                                { name: 'Wi-Fiアクセスポイント', qtyType: 'perBed', baseQty: 1.5, entry: 46750, middle: 93500, highend: 187000 },
+                                { name: 'Wi-Fi導入支援', qtyType: 'fixed', baseQty: 1, entry: 50000, middle: 100000, highend: 150000 }
+                            ]
+                        },
+                        {
+                            name: 'LAN配線工事',
+                            items: [
+                                { name: 'ネットワーク工事一式', qtyType: 'ratio', baseQty: 35, entry: 1744900, middle: 3489800, highend: 5234700 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'monitoring',
+                    name: '見守り・介護システム',
+                    icon: '👁️',
+                    subcategories: [
+                        {
+                            name: '居室内',
+                            items: [
+                                { name: 'ゲートウェイ', qtyType: 'perBed', baseQty: 1, entry: 35153, middle: 70305, highend: 140610 },
+                                { name: '呼び出しボタン（居室用）', qtyType: 'perBed', baseQty: 1, entry: 9875, middle: 19750, highend: 39500 },
+                                { name: '呼び出しボタン（トイレ用）', qtyType: 'perBed', baseQty: 1, entry: 9875, middle: 19750, highend: 39500 }
+                            ]
+                        },
+                        {
+                            name: '共用部',
+                            items: [
+                                { name: '共用部ゲートウェイ', qtyType: 'ratio', baseQty: 0.4, entry: 15413, middle: 30825, highend: 61650 },
+                                { name: '呼び出しボタン（共用部）', qtyType: 'ratio', baseQty: 0.6, entry: 9875, middle: 19750, highend: 39500 }
+                            ]
+                        },
+                        {
+                            name: 'システム費',
+                            items: [
+                                { name: 'ライセンス費', qtyType: 'fixed', baseQty: 1, entry: 250000, middle: 500000, highend: 750000 },
+                                { name: '導入支援費', qtyType: 'fixed', baseQty: 1, entry: 250000, middle: 500000, highend: 750000 },
+                                { name: 'プロジェクト導入支援', qtyType: 'fixed', baseQty: 1, entry: 1200000, middle: 2400000, highend: 3600000 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'carerecord',
+                    name: '介護記録システム',
+                    icon: '📋',
+                    subcategories: [
+                        {
+                            name: 'クラウド型（5年換算）',
+                            items: [
+                                { name: 'カイポケ（訪問介護/障害）', qtyType: 'fixed', baseQty: 1, entry: 1500000, middle: 1500000, highend: 1500000 },
+                                { name: 'カイポケ（上記以外）', qtyType: 'fixed', baseQty: 1, entry: 300000, middle: 300000, highend: 300000 },
+                                { name: 'カナミック', qtyType: 'fixed', baseQty: 1, entry: 1900000, middle: 2200000, highend: 2500000 },
+                                { name: 'ワイズマン セカンドライン', qtyType: 'fixed', baseQty: 1, entry: 99000, middle: 150000, highend: 300000 }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 'curtain',
+                    name: 'カーテン一式',
+                    icon: '🪟',
+                    subcategories: [
+                        {
+                            name: 'カーテン',
+                            items: [
+                                { name: 'カーテン・ブラインド材料費', qtyType: 'perBed', baseQty: 1, entry: 10136, middle: 20272, highend: 40544 },
+                                { name: '施工取付工事費', qtyType: 'fixed', baseQty: 1, entry: 172750, middle: 345500, highend: 691000 }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // 現在のモデル
+        let currentModel = 'entry';
+
+        // カテゴリの開閉状態
+        const categoryStates = {};
+        estimateData.categories.forEach(cat => {
+            categoryStates[cat.id] = true;
+        });
+
+        // アイテムのチェック状態
+        const itemChecked = {};
+
+        // 初期化
+        function init() {
+            // URLパラメータから入居者数を取得
+            const params = new URLSearchParams(window.location.search);
+            if(params.has('residents')) {
+                bedCount = parseInt(params.get('residents')) || 50;
+                document.getElementById('bedCount').value = bedCount;
+            }
+            
+            estimateData.categories.forEach(category => {
+                category.subcategories.forEach((sub, subIdx) => {
+                    sub.items.forEach((item, itemIdx) => {
+                        itemChecked[getItemKey(category.id, subIdx, itemIdx)] = true;
+                    });
+                });
+            });
+            renderCategories();
+            updateTotals();
+        }
+
+        // アイテムキーを生成
+        function getItemKey(categoryId, subIdx, itemIdx) {
+            return `${categoryId}-${subIdx}-${itemIdx}`;
+        }
+
+        // 数量を計算
+        function calculateQty(item) {
+            const floors = Math.ceil(bedCount / 30);
+            switch(item.qtyType) {
+                case 'fixed': return item.baseQty;
+                case 'perBed': return Math.ceil(bedCount * item.baseQty);
+                case 'perFloor': return item.baseQty * floors;
+                case 'ratio': return Math.ceil(bedCount * item.baseQty);
+                default: return item.baseQty;
+            }
+        }
+
+        // 入居者数を更新
+        function updateBedCount() {
+            bedCount = parseInt(document.getElementById('bedCount').value) || 50;
+            document.getElementById('displayBedCount').textContent = bedCount;
+            renderCategories();
+            updateTotals();
+        }
+
+        // プリセットボタン
+        function setBedCount(count) {
+            bedCount = count;
+            document.getElementById('bedCount').value = count;
+            document.getElementById('displayBedCount').textContent = count;
+            renderCategories();
+            updateTotals();
+        }
+
+        // カテゴリ全てチェックされているか
+        function isCategoryFullyChecked(category) {
+            for (let subIdx = 0; subIdx < category.subcategories.length; subIdx++) {
+                for (let itemIdx = 0; itemIdx < category.subcategories[subIdx].items.length; itemIdx++) {
+                    if (!itemChecked[getItemKey(category.id, subIdx, itemIdx)]) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // カテゴリをレンダリング
+        function renderCategories() {
+            const container = document.getElementById('categories-container');
+            container.innerHTML = '';
+
+            estimateData.categories.forEach(category => {
+                const isCollapsed = !categoryStates[category.id];
+                const isFullyChecked = isCategoryFullyChecked(category);
+                const categoryTotal = calculateCategoryTotal(category);
+
+                let categoryHTML = `
+                    <div class="category-section ${isCollapsed ? 'collapsed' : ''}" id="category-${category.id}">
+                        <div class="category-header">
+                            <div class="category-header-left">
+                                <input type="checkbox" class="category-checkbox" 
+                                    ${isFullyChecked ? 'checked' : ''} 
+                                    onclick="event.stopPropagation(); toggleCategoryCheck('${category.id}')">
+                                <h3 onclick="toggleCategoryCollapse('${category.id}')">
+                                    <span class="icon">${category.icon}</span>${category.name}
+                                </h3>
+                            </div>
+                            <span class="category-total">¥${formatNumber(categoryTotal)}</span>
+                            <span class="category-toggle" onclick="toggleCategoryCollapse('${category.id}')">▼</span>
+                        </div>
+                        <div class="category-content">
+                `;
+
+                category.subcategories.forEach((subcategory, subIdx) => {
+                    const subTotal = calculateSubcategoryTotal(category, subIdx);
+                    categoryHTML += `
+                        <div class="subcategory">
+                            <div class="subcategory-header">
+                                <span>${subcategory.name}</span>
+                                <span class="subcategory-total">¥${formatNumber(subTotal)}</span>
+                            </div>
+                    `;
+
+                    subcategory.items.forEach((item, itemIdx) => {
+                        const key = getItemKey(category.id, subIdx, itemIdx);
+                        const isChecked = itemChecked[key];
+                        const qty = calculateQty(item);
+                        const price = item[currentModel] * qty;
+
+                        categoryHTML += `
+                            <div class="item-row ${isChecked ? '' : 'disabled'}">
+                                <input type="checkbox" class="item-checkbox" 
+                                    ${isChecked ? 'checked' : ''} 
+                                    onchange="toggleItem('${key}')">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-qty">${qty}点</div>
+                                <div class="item-price">¥${formatNumber(price)}</div>
+                            </div>
+                        `;
+                    });
+
+                    categoryHTML += `</div>`;
+                });
+
+                categoryHTML += `</div></div>`;
+                container.innerHTML += categoryHTML;
+            });
+        }
+
+        // カテゴリのチェックを切り替え
+        function toggleCategoryCheck(categoryId) {
+            const category = estimateData.categories.find(c => c.id === categoryId);
+            const isFullyChecked = isCategoryFullyChecked(category);
+            const newState = !isFullyChecked;
+
+            category.subcategories.forEach((sub, subIdx) => {
+                sub.items.forEach((item, itemIdx) => {
+                    itemChecked[getItemKey(categoryId, subIdx, itemIdx)] = newState;
+                });
+            });
+
+            renderCategories();
+            updateTotals();
+        }
+
+        // 個別アイテムのチェックを切り替え
+        function toggleItem(key) {
+            itemChecked[key] = !itemChecked[key];
+            renderCategories();
+            updateTotals();
+        }
+
+        // カテゴリの開閉を切り替え
+        function toggleCategoryCollapse(categoryId) {
+            categoryStates[categoryId] = !categoryStates[categoryId];
+            const element = document.getElementById(`category-${categoryId}`);
+            element.classList.toggle('collapsed');
+        }
+
+        // モデルを選択
+        function selectModel(model) {
+            currentModel = model;
+            document.querySelectorAll('.model-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`.model-tab.${model}`).classList.add('active');
+            renderCategories();
+            updateTotals();
+        }
+
+        // カテゴリの合計を計算
+        function calculateCategoryTotal(category) {
+            let total = 0;
+            category.subcategories.forEach((sub, subIdx) => {
+                sub.items.forEach((item, itemIdx) => {
+                    const key = getItemKey(category.id, subIdx, itemIdx);
+                    if (itemChecked[key]) {
+                        const qty = calculateQty(item);
+                        total += item[currentModel] * qty;
+                    }
+                });
+            });
+            return total;
+        }
+
+        // サブカテゴリの合計を計算
+        function calculateSubcategoryTotal(category, subIdx) {
+            let total = 0;
+            category.subcategories[subIdx].items.forEach((item, itemIdx) => {
+                const key = getItemKey(category.id, subIdx, itemIdx);
+                if (itemChecked[key]) {
+                    const qty = calculateQty(item);
+                    total += item[currentModel] * qty;
+                }
+            });
+            return total;
+        }
+
+        // 合計を更新
+        function updateTotals() {
+            let subtotal = 0;
+            let selectedCount = 0;
+
+            estimateData.categories.forEach(cat => {
+                cat.subcategories.forEach((sub, subIdx) => {
+                    sub.items.forEach((item, itemIdx) => {
+                        const key = getItemKey(cat.id, subIdx, itemIdx);
+                        if (itemChecked[key]) {
+                            const qty = calculateQty(item);
+                            subtotal += item[currentModel] * qty;
+                            selectedCount++;
+                        }
+                    });
+                });
+            });
+
+            const tax = Math.floor(subtotal * 0.1);
+            const total = subtotal + tax;
+
+            document.getElementById('totalAmount').textContent = formatNumber(total);
+            document.getElementById('subtotal').textContent = formatNumber(subtotal);
+            document.getElementById('taxAmount').textContent = formatNumber(tax);
+            document.getElementById('selectedCount').textContent = selectedCount;
+        }
+
+        // 数字をカンマ区切りでフォーマット
+        function formatNumber(num) {
+            return Math.round(num).toLocaleString('ja-JP');
+        }
+
+        // 全てリセット
+        function resetAll() {
+            Object.keys(itemChecked).forEach(key => {
+                itemChecked[key] = false;
+            });
+            renderCategories();
+            updateTotals();
+        }
+
+        // 全て選択
+        function selectAll() {
+            Object.keys(itemChecked).forEach(key => {
+                itemChecked[key] = true;
+            });
+            renderCategories();
+            updateTotals();
+        }
+
+        // 印刷
+        function printEstimate() {
+            window.print();
+        }
+
+        // ページ読み込み時に初期化
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

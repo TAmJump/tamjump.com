@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>開発シミュレーション | DEVELOPMENT Pro | TAmJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #E60012;
+            
+            --primary-dark: #C5000F;
+            --white: #ffffff;
+            --dark: #1d1d1d;
+            --gray-text: #333333;
+            --off-white: #ffffff;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: "Inter", "Helvetica Neue", sans-serif;
+            line-height: 1.6; 
+            color: var(--dark);
+            background: #ffffff;
+        }
+        a { text-decoration: none; color: inherit; }
+
+        header {
+            background: var(--white);
+            padding: 0.8rem 1.5rem;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+        .logo .char-m { font-family: "Inter", sans-serif; font-weight: 300; font-size: 0.6em; }
+        nav { display: flex; gap: 1.5rem; }
+        nav a { color: var(--dark); font-size: 0.8rem; font-weight: 500; }
+        nav a:hover { color: var(--primary); }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 6rem 1.5rem 2rem;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .hero h1 { font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; margin-bottom: 0.5rem; }
+        .hero p { font-size: 0.85rem; opacity: 0.9; max-width: 650px; margin: 0 auto; }
+        .flow { display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+        .flow .step { background: rgba(255,255,255,0.15); padding: 0.3rem 0.7rem; border-radius: 50px; font-size: 0.75rem; }
+
+        .wrap { max-width: 1180px; margin: 0 auto; padding: 1rem; }
+        .grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 1rem; margin-top: 0.8rem; align-items: start; }
+        @media (max-width: 1024px) { .grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.2rem;
+            margin-bottom: 0.8rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.02);
+        }
+        .sectionTitle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+        .sectionTitle h2 {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .sectionTitle h2 .num {
+            width: 22px; height: 22px;
+            background: linear-gradient(135deg, #E60012, #C5000F);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white);
+            font-size: 0.7rem;
+        }
+        .badge {
+            padding: 0.15rem 0.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            font-size: 0.6rem;
+            color: var(--gray-text);
+            background: var(--off-white);
+        }
+
+        .row { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: flex-end; }
+        label {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            color: var(--gray-text);
+            font-size: 0.65rem;
+            font-weight: 500;
+            min-width: 130px;
+        }
+        input, select {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.55rem 0.7rem;
+            color: var(--dark);
+            font-size: 0.8rem;
+            min-width: 130px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(230, 0, 18, 0.1);
+        }
+        input[type="number"] { width: 130px; }
+        input:disabled { background: #f3f4f6; opacity: 0.7; }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.35rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.7rem;
+            color: var(--gray-text);
+            background: var(--white);
+        }
+        .pill b { color: var(--dark); }
+        .pill.highlight { background: var(--off-white); border-color: var(--primary); }
+        .pill.highlight b { color: var(--primary); }
+
+        .hint { color: var(--gray-text); font-size: 0.62rem; margin-top: 0.5rem; line-height: 1.4; }
+        .hr { height: 1px; background: var(--border); margin: 0.8rem 0; }
+
+        .tasks { display: grid; gap: 0.4rem; margin-top: 0.5rem; }
+        .task {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.5rem 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--input-bg);
+        }
+        .task:hover { border-color: var(--primary); background: var(--off-white); }
+        .task .left { display: flex; align-items: flex-start; gap: 0.5rem; }
+        .task input[type="checkbox"] { width: 15px; height: 15px; margin-top: 2px; accent-color: var(--primary); }
+        .task .name { font-size: 0.8rem; font-weight: 600; }
+        .task .desc { font-size: 0.65rem; color: var(--gray-text); }
+        .task .range { text-align: right; min-width: 100px; }
+        .task .range strong { font-size: 0.75rem; color: var(--primary); }
+        .task .range span { font-size: 0.6rem; color: var(--gray-text); }
+
+        .phaseTitle {
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin: 0.7rem 0 0.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .phaseTitle .id {
+            width: 18px; height: 18px;
+            background: var(--primary);
+            border-radius: 4px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white);
+            font-size: 0.65rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
+        th, td { border-bottom: 1px solid var(--border); padding: 0.45rem 0.3rem; font-size: 0.7rem; }
+        th { text-align: left; color: var(--gray-text); font-weight: 600; }
+        td.num { text-align: right; font-weight: 500; }
+
+        .total {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 0.7rem 0.9rem;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            background: var(--off-white);
+            margin-top: 0.7rem;
+        }
+        .total strong { font-size: 1.1rem; color: var(--primary); }
+        .total .small { font-size: 0.6rem; color: var(--gray-text); }
+
+        .yield-box {
+            background: linear-gradient(135deg, #E60012, #C5000F);
+            color: var(--white);
+            padding: 0.7rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 0.7rem 0;
+        }
+        .yield-box .label { font-size: 0.65rem; opacity: 0.9; }
+        .yield-box .value { font-size: 1.5rem; font-weight: 700; }
+        .yield-row { display: flex; justify-content: space-around; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.2); }
+        .yield-row .label { font-size: 0.55rem; }
+        .yield-row .value { font-size: 0.9rem; }
+
+        .cta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; }
+        .btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .btn.primary { background: linear-gradient(135deg, #E60012, #C5000F); color: white; }
+        .btn.primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(230, 0, 18, 0.3); }
+        .btn.secondary { background: var(--white); border: 2px solid var(--primary); color: var(--primary); }
+
+        .summary-sidebar { position: sticky; top: 70px; }
+
+        .summary-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 1rem;
+            box-shadow: 0 8px 30px rgba(230, 0, 18, 0.1);
+            border: 2px solid var(--primary);
+        }
+        .summary-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.6rem; }
+
+        footer {
+            background: var(--white);
+            color: var(--white);
+            padding: 1.2rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .footer-logo { font-family: "Bebas Neue", sans-serif; font-size: 1.2rem; }
+        .footer-copy { font-size: 0.65rem; color: rgba(255, 255, 255, 0.5); }
+
+        @media (max-width: 768px) {
+            header { padding: 0.6rem 0.8rem; }
+            nav { display: none; }
+            .hero { padding: 4.5rem 1rem 1.5rem; }
+            .wrap { padding: 0.8rem; }
+            input, select { min-width: 100%; }
+            .task { flex-direction: column; }
+            .task .range { text-align: left; }
+        }
+        @media print {
+            header, footer, .cta { display: none; }
+            .grid { display: block; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="home.html" class="logo"><img src="logo.png" alt="TAmJ" style="height: 28px;"></a>
+            <nav>
+                <a href="home.html">HOME</a>
+                <a href="services.html">SOLUTION</a>
+                <a href="about-company.html">ABOUT</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>介護・医療施設の開発シミュレーション</h1>
+        <p><strong>施設種別＋入居者数</strong>を入力するだけで、面積→建築費→投資額を自動で概算します。</p>
+        <div class="flow" id="flow"></div>
+    </section>
+
+    <div class="wrap">
+        <div class="grid">
+            <div>
+                <!-- 0. 施設種別 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">0</span> 施設種別＋かんたん入力</h2>
+                        <span class="badge">係数プリセット</span>
+                    </div>
+                    <div class="row">
+                        <label>施設種別
+                            <select id="facilityType">
+                                <option value="yuryo">住宅型/介護付 有料（標準）</option>
+                                <option value="sakouju">サ高住（標準）</option>
+                                <option value="groupHome">グループホーム（標準）</option>
+                                <option value="tokuyo">特養（標準）</option>
+                            </select>
+                        </label>
+                        <label>入居者数（人）
+                            <input type="number" id="residents" value="100" min="10" step="1">
+                        </label>
+                        <label>居室構成
+                            <select id="roomPlan">
+                                <option value="private_only">全室個室</option>
+                                <option value="mixed">個室＋多床室</option>
+                            </select>
+                        </label>
+                        <label>個室面積（㎡/室）
+                            <select id="privateAreaPreset">
+                                <option value="13">13㎡</option>
+                                <option value="18" selected>18㎡</option>
+                                <option value="22">22㎡</option>
+                                <option value="custom">カスタム</option>
+                            </select>
+                        </label>
+                        <label>個室面積（カスタム）
+                            <input type="number" id="privateArea" value="18" min="10" step="0.5">
+                        </label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <label>家族部屋（室数）
+                            <input type="number" id="familyRooms" value="0" min="0" step="1">
+                        </label>
+                        <label>家族部屋（㎡/室）
+                            <input type="number" id="familyRoomArea" value="25" min="10" step="1">
+                        </label>
+                        <label>共用部係数
+                            <input type="number" id="commonFactor" value="1.00" min="0.70" max="1.60" step="0.01">
+                        </label>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="sectionTitle"><h2 style="font-size: 0.8rem;">多床室（任意）</h2><span class="badge">混合時のみ</span></div>
+                    <div class="row">
+                        <label>多床室の室数
+                            <input type="number" id="multiRooms" value="0" min="0" step="1">
+                        </label>
+                        <label>1室あたり人数
+                            <select id="bedsPerRoom">
+                                <option value="2">2人部屋</option>
+                                <option value="4" selected>4人部屋</option>
+                            </select>
+                        </label>
+                        <label>多床の面積（㎡/人）
+                            <select id="multiAreaPerPerson">
+                                <option value="7">7㎡</option>
+                                <option value="8" selected>8㎡</option>
+                                <option value="9">9㎡</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <span class="pill">個室：<b id="privateRoomsOut">0</b> 室</span>
+                        <span class="pill">多床：<b id="multiBedsOut">0</b> 人分</span>
+                        <span class="pill highlight">専有：<b id="net_m2_out">0</b> ㎡</span>
+                        <span class="pill highlight">延床：<b id="gfa_m2_out">0</b> ㎡</span>
+                    </div>
+                </div>
+
+                <!-- 1. 建築条件 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">1</span> 建築条件（47都道府県）</h2>
+                        <span class="badge">A工事単価ベース</span>
+                    </div>
+                    <div class="row">
+                        <label>都道府県
+                            <select id="pref"></select>
+                        </label>
+                        <label>構造
+                            <select id="structure">
+                                <option value="RC造（在来）">RC造（在来）</option>
+                                <option value="S造（一般）">S造（鉄骨）</option>
+                                <option value="木造（準耐火）">木造（準耐火）</option>
+                                <option value="SR造（SRC想定）">SRC造</option>
+                            </select>
+                        </label>
+                        <label>階数
+                            <select id="floors">
+                                <option value="1">平屋</option>
+                                <option value="2" selected>2階</option>
+                                <option value="3">3階</option>
+                                <option value="4">4階</option>
+                                <option value="5">5階</option>
+                                <option value="6">6階</option>
+                                <option value="7">7階</option>
+                                <option value="8">8階</option>
+                                <option value="9">9階</option>
+                                <option value="10">10階</option>
+                            </select>
+                        </label>
+                        <label>延床面積（㎡）※自動
+                            <input type="number" id="gfa_m2" value="0" min="0" step="1">
+                        </label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <label>共用部の広さ
+                            <select id="buildingType">
+                                <option value="roomcentric">コンパクト（60%）</option>
+                                <option value="apartment">標準（50%）</option>
+                                <option value="hotel">ゆったり（40%）</option>
+                            </select>
+                        </label>
+                        <label>用途係数
+                            <input type="number" id="useFactor" value="1.25" min="0.80" max="2.00" step="0.01">
+                        </label>
+                        <label>指数調整
+                            <input type="number" id="indexFactor" value="1.10" min="0.50" max="2.50" step="0.01">
+                        </label>
+                    </div>
+                    <!-- 非表示のレンタブル比（内部計算用） -->
+                    <input type="hidden" id="rentable_ratio" value="50">
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <div class="pill">単価（円/㎡）<b id="unit_cost">0</b></div>
+                        <div class="pill">階数係数 <b id="floor_factor_out">1.00</b></div>
+                        <div class="pill highlight">建築費（自動）<b id="build_cost_range">¥0〜¥0</b></div>
+                    </div>
+                    <p class="hint" id="floorHint">💡 2階建て基準。6階以上は構造・消防設備が大幅に増加します。</p>
+                </div>
+
+                <!-- 2. 土地 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">2</span> 仕入・土地関連費</h2>
+                        <span class="badge">規模×地価で自動</span>
+                    </div>
+                    <div class="row">
+                        <label>土地形態
+                            <select id="landMode">
+                                <option value="purchase">購入（所有）</option>
+                                <option value="lease">借地（賃借）</option>
+                            </select>
+                        </label>
+                        <label>消費税率（%）<input type="number" id="taxRate" value="10" min="0" max="20" step="1"></label>
+                        <label>自動計算
+                            <select id="landAuto">
+                                <option value="auto" selected>ON（自動）</option>
+                                <option value="manual">OFF（手入力）</option>
+                            </select>
+                        </label>
+                        <label>評価比率<input type="number" id="assessedRatio" value="0.70" min="0.30" max="1.20" step="0.01"></label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <label>土地仕入価格（税抜）<br><small style="color:var(--primary);">※購入時のみ</small><input type="text" id="land_price" value="0" inputmode="numeric"></label>
+                        <label>月額地代（借地）<br><small style="color:var(--primary);">※借地時のみ</small><input type="text" id="ground_rent_month" value="0" inputmode="numeric"></label>
+                        <label>造成係数<input type="number" id="siteWorkFactor" value="1.00" min="0.50" max="3.00" step="0.01"></label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <label>保証金（月数）<input type="number" id="deposit_months" value="12" min="0" max="60" step="1"></label>
+                        <label>礼金（月数）<input type="number" id="key_months" value="0" min="0" max="24" step="1"></label>
+                        <label>土地諸費用（追加）<input type="text" id="landFees_net" value="0" inputmode="numeric"></label>
+                        <label>自動算出額<input type="text" id="landFees_auto_net" value="0" disabled></label>
+                    </div>
+                    <div class="row" style="margin-top: 0.5rem;">
+                        <div class="pill">敷地面積（自動）<b id="site_area_out">0</b> ㎡</div>
+                        <div class="pill">建築面積 <b id="building_area_out">0</b> ㎡</div>
+                    </div>
+                    <p class="hint" id="landHint">💡 敷地面積 = (延床面積 ÷ 階数) × 1.8（建蔽率55%+余裕）で自動計算</p>
+                </div>
+
+                <!-- 3. 建築費その他 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">3</span> 建築費その他</h2>
+                        <span class="badge">建築費連動で自動</span>
+                    </div>
+                    <div class="row">
+                        <label>設計・管理費（税抜）<br><small style="color:var(--primary);">※建築費の6%</small><input type="text" id="designMgmt_net" value="0" inputmode="numeric"></label>
+                        <label>登記・士業等（税抜）<br><small style="color:var(--primary);">※建築費の0.8%</small><input type="text" id="registry_net" value="0" inputmode="numeric"></label>
+                        <label>予備費（税抜）<br><small style="color:var(--primary);">※建築費の4%</small><input type="text" id="contingency_net" value="0" inputmode="numeric"></label>
+                        <label>リーシング<br><small style="color:var(--primary);">※入居者×5万</small><input type="text" id="leasing_net" value="0" inputmode="numeric"></label>
+                        <label>立ち退き<input type="text" id="relocation_net" value="0" inputmode="numeric"></label>
+                    </div>
+                    <p class="hint">💡 建築費（中央値）を基準に自動セット。上書き可能です。</p>
+                </div>
+
+                <!-- 4. 開発作業 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">4</span> 開発作業（選択）</h2>
+                        <span class="badge">Development_Master</span>
+                    </div>
+                    <div id="tasksByPhase"></div>
+                </div>
+
+                <!-- 5. 開業準備 -->
+                <div class="card">
+                    <div class="sectionTitle">
+                        <h2><span class="num">5</span> 開業準備</h2>
+                        <span class="badge">D Phase</span>
+                    </div>
+                    <div id="tasksByPhaseD"></div>
+                </div>
+            </div>
+
+            <!-- Right: Summary -->
+            <div class="summary-sidebar">
+                <div class="summary-card">
+                    <h3>📊 概算サマリー</h3>
+                    <table>
+                        <thead><tr><th>区分</th><th class="num">税抜</th><th class="num">税込</th></tr></thead>
+                        <tbody id="summaryTable"></tbody>
+                    </table>
+                    <div class="total">
+                        <div>
+                            <div class="small">トータルインベストメント</div>
+                            <strong id="totalInv">¥0〜¥0</strong>
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                    <div class="sectionTitle" style="margin-bottom: 0.3rem;">
+                        <h2 style="font-size: 0.8rem;">収入 → NOI/利回り</h2>
+                        <span class="badge">NOI利回り6%基準</span>
+                    </div>
+                    <div class="row">
+                        <label>月額賃料<br><small style="color:var(--primary);">※NOI6%で逆算</small><input type="text" id="rent_month" value="0" inputmode="numeric"></label>
+                        <label>その他/月<br><small style="color:var(--primary);">※賃料の8%</small><input type="text" id="other_month" value="0" inputmode="numeric"></label>
+                    </div>
+                    <div class="row" style="margin-top: 0.3rem;">
+                        <label>管理費/月<br><small style="color:var(--primary);">※賃料の8%</small><input type="text" id="mgmt_month" value="0" inputmode="numeric"></label>
+                        <label>土地税/年<br><small style="color:var(--primary);">※購入時のみ</small><input type="text" id="tax_land_year" value="0" inputmode="numeric"></label>
+                        <label>建物税/年<br><small style="color:var(--primary);">※建築費の0.4%</small><input type="text" id="tax_bldg_year" value="0" inputmode="numeric"></label>
+                    </div>
+                    <p class="hint">💡 NOI利回り6%を基準に月額賃料を逆算。賃料を変更すると利回りが変化します。</p>
+                    <div class="yield-box">
+                        <div class="label">NOI利回り</div>
+                        <div class="value" id="noi_yield">0%</div>
+                        <div class="yield-row">
+                            <div><div class="label">表面利回り</div><div class="value" id="gross_yield">0%</div></div>
+                            <div><div class="label">年間NOI</div><div class="value" id="noi_year">¥0</div></div>
+                        </div>
+                    </div>
+                    <div class="cta">
+                        <button class="btn primary" id="btnCalc" style="background:#10B981;">🔄 計算を実行</button>
+                        <button class="btn primary" id="btnToMember">会員ページで見積作成 →</button>
+                        <button class="btn secondary" id="btnSave">保存</button>
+                    </div>
+                    <p class="hint">保存先: localStorage.devSimulation</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">TA<span class="char-m">m</span>J</div>
+        <p class="footer-copy">© 2025 TAmJ Inc. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const M2_TO_TSUBO = 1/3.305785;
+        function yen(n){ return "¥"+Math.round(Number(n||0)).toLocaleString("ja-JP"); }
+        function yenShort(n){ n=Number(n||0); if(n>=1e8) return "¥"+(n/1e8).toFixed(2)+"億"; if(n>=1e4) return "¥"+Math.round(n/1e4).toLocaleString()+"万"; return yen(n); }
+        function yenRange(min,max){ return `${yenShort(min)}〜${yenShort(max)}`; }
+        function num(id){ 
+            const el=document.getElementById(id); 
+            if(!el) return 0;
+            // カンマを除去して数値に変換
+            const v = String(el.value||0).replace(/,/g, '');
+            return Number(v) || 0;
+        }
+        function setText(id, txt){ const el=document.getElementById(id); if(el) el.textContent=txt; }
+        function setVal(id, v){ 
+            const el=document.getElementById(id); 
+            if(!el) return;
+            // 金額系フィールドはカンマ付きで表示
+            const moneyFields = ['land_price','ground_rent_month','landFees_net','landFees_auto_net','designMgmt_net','registry_net','contingency_net','leasing_net','relocation_net','rent_month','other_month','mgmt_month','tax_land_year','tax_bldg_year'];
+            if(moneyFields.includes(id) && el.type !== 'number'){
+                el.value = Number(v).toLocaleString('ja-JP');
+            } else {
+                el.value = v;
+            }
+        }
+
+        let devData=null, buildData=null;
+        let state={ selectedTasks:new Set(), build:{unit:0,min:0,max:0}, devTasksCost:{min:0,max:0}, landFeesAuto:0, summary:{} };
+
+        // 開発タスクデータ（インライン）
+        const DEV_DATA = {
+            phases: [
+                { id: "A", name: "企画・基本設計" },
+                { id: "B", name: "実施設計・行政手続" },
+                { id: "C", name: "施工・整備" },
+                { id: "D", name: "開業準備" }
+            ],
+            tasks: [
+                { phaseId: "A", id: "A-01", name: "事業構想整理", description: "ヒアリング・方向性整理", display: true },
+                { phaseId: "A", id: "A-02", name: "簡易収支モデル作成", description: "初期費用・月次概算", display: true },
+                { phaseId: "A", id: "A-03", name: "施設コンセプト設計", description: "介護種別・特徴設計", display: true },
+                { phaseId: "B", id: "B-01", name: "基本設計", description: "平面・動線計画", display: true },
+                { phaseId: "B", id: "B-02", name: "実施設計", description: "施工可能図面作成", display: true },
+                { phaseId: "B", id: "B-03", name: "行政協議", description: "消防・保健所・行政折衝", display: true },
+                { phaseId: "C", id: "C-01", name: "施工管理", description: "工程・品質管理", display: true },
+                { phaseId: "C", id: "C-02", name: "什器備品選定", description: "家具・備品・医療機器", display: true },
+                { phaseId: "D", id: "D-01", name: "採用計画", description: "職種・人数設計", display: true },
+                { phaseId: "D", id: "D-02", name: "研修・教育", description: "開業前研修", display: true },
+                { phaseId: "D", id: "D-03", name: "開業立会・検査", description: "行政検査対応", display: true }
+            ],
+            costRanges: {
+                "A-01": { min: 300000, max: 800000, note: "規模により変動" },
+                "A-02": { min: 200000, max: 600000, note: "簡易モデル" },
+                "A-03": { min: 300000, max: 1000000, note: "コンセプト次第" },
+                "B-01": { min: 1500000, max: 4000000, note: "規模依存" },
+                "B-02": { min: 2000000, max: 6000000, note: "実施設計" },
+                "B-03": { min: 300000, max: 1000000, note: "行政件数次第" },
+                "C-01": { min: 0, max: 0, note: "工事費率" },
+                "C-02": { min: 0, max: 0, note: "什器備品マスタ連動" },
+                "D-01": { min: 0, max: 0, note: "採用人数依存" },
+                "D-02": { min: 200000, max: 800000, note: "研修内容依存" },
+                "D-03": { min: 100000, max: 300000, note: "立会回数依存" }
+            }
+        };
+
+        // 建築単価データ（インライン・47都道府県）
+        const BUILD_DATA = {
+            prefectures: [
+                { id: "北海道", name: "北海道", a_unit_yen_per_m2: { est: 430000, min: 400000, max: 460000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "青森", name: "青森", a_unit_yen_per_m2: { est: 404000, min: 376000, max: 432000 }, land_yen_per_m2: 30000, rent_yen_per_m2_month: 80 },
+                { id: "岩手", name: "岩手", a_unit_yen_per_m2: { est: 404000, min: 376000, max: 432000 }, land_yen_per_m2: 30000, rent_yen_per_m2_month: 80 },
+                { id: "宮城", name: "宮城", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 80000, rent_yen_per_m2_month: 250 },
+                { id: "秋田", name: "秋田", a_unit_yen_per_m2: { est: 400000, min: 372000, max: 428000 }, land_yen_per_m2: 25000, rent_yen_per_m2_month: 70 },
+                { id: "山形", name: "山形", a_unit_yen_per_m2: { est: 400000, min: 372000, max: 428000 }, land_yen_per_m2: 30000, rent_yen_per_m2_month: 80 },
+                { id: "福島", name: "福島", a_unit_yen_per_m2: { est: 413000, min: 384000, max: 442000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "茨城", name: "茨城", a_unit_yen_per_m2: { est: 430000, min: 400000, max: 460000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "栃木", name: "栃木", a_unit_yen_per_m2: { est: 426000, min: 396000, max: 456000 }, land_yen_per_m2: 45000, rent_yen_per_m2_month: 130 },
+                { id: "群馬", name: "群馬", a_unit_yen_per_m2: { est: 426000, min: 396000, max: 456000 }, land_yen_per_m2: 45000, rent_yen_per_m2_month: 130 },
+                { id: "埼玉", name: "埼玉", a_unit_yen_per_m2: { est: 456000, min: 424000, max: 488000 }, land_yen_per_m2: 150000, rent_yen_per_m2_month: 450 },
+                { id: "千葉", name: "千葉", a_unit_yen_per_m2: { est: 452000, min: 420000, max: 484000 }, land_yen_per_m2: 120000, rent_yen_per_m2_month: 350 },
+                { id: "東京23区", name: "東京23区", a_unit_yen_per_m2: { est: 560000, min: 520000, max: 600000 }, land_yen_per_m2: 850000, rent_yen_per_m2_month: 2500 },
+                { id: "東京（その他）", name: "東京（その他）", a_unit_yen_per_m2: { est: 490000, min: 455000, max: 525000 }, land_yen_per_m2: 280000, rent_yen_per_m2_month: 700 },
+                { id: "神奈川", name: "神奈川", a_unit_yen_per_m2: { est: 499000, min: 464000, max: 534000 }, land_yen_per_m2: 200000, rent_yen_per_m2_month: 600 },
+                { id: "新潟", name: "新潟", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "富山", name: "富山", a_unit_yen_per_m2: { est: 417000, min: 388000, max: 446000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "石川", name: "石川", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "福井", name: "福井", a_unit_yen_per_m2: { est: 413000, min: 384000, max: 442000 }, land_yen_per_m2: 35000, rent_yen_per_m2_month: 100 },
+                { id: "山梨", name: "山梨", a_unit_yen_per_m2: { est: 426000, min: 396000, max: 456000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "長野", name: "長野", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 45000, rent_yen_per_m2_month: 130 },
+                { id: "岐阜", name: "岐阜", a_unit_yen_per_m2: { est: 430000, min: 400000, max: 460000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "静岡", name: "静岡", a_unit_yen_per_m2: { est: 443000, min: 412000, max: 474000 }, land_yen_per_m2: 70000, rent_yen_per_m2_month: 200 },
+                { id: "愛知", name: "愛知", a_unit_yen_per_m2: { est: 473000, min: 440000, max: 506000 }, land_yen_per_m2: 150000, rent_yen_per_m2_month: 450 },
+                { id: "三重", name: "三重", a_unit_yen_per_m2: { est: 434000, min: 403000, max: 465000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "滋賀", name: "滋賀", a_unit_yen_per_m2: { est: 439000, min: 408000, max: 470000 }, land_yen_per_m2: 60000, rent_yen_per_m2_month: 180 },
+                { id: "京都", name: "京都", a_unit_yen_per_m2: { est: 464000, min: 431000, max: 497000 }, land_yen_per_m2: 150000, rent_yen_per_m2_month: 450 },
+                { id: "大阪", name: "大阪", a_unit_yen_per_m2: { est: 490000, min: 456000, max: 524000 }, land_yen_per_m2: 200000, rent_yen_per_m2_month: 600 },
+                { id: "兵庫", name: "兵庫", a_unit_yen_per_m2: { est: 460000, min: 428000, max: 492000 }, land_yen_per_m2: 100000, rent_yen_per_m2_month: 300 },
+                { id: "奈良", name: "奈良", a_unit_yen_per_m2: { est: 443000, min: 412000, max: 474000 }, land_yen_per_m2: 70000, rent_yen_per_m2_month: 200 },
+                { id: "和歌山", name: "和歌山", a_unit_yen_per_m2: { est: 430000, min: 400000, max: 460000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "鳥取", name: "鳥取", a_unit_yen_per_m2: { est: 409000, min: 380000, max: 438000 }, land_yen_per_m2: 30000, rent_yen_per_m2_month: 80 },
+                { id: "島根", name: "島根", a_unit_yen_per_m2: { est: 409000, min: 380000, max: 438000 }, land_yen_per_m2: 30000, rent_yen_per_m2_month: 80 },
+                { id: "岡山", name: "岡山", a_unit_yen_per_m2: { est: 430000, min: 400000, max: 460000 }, land_yen_per_m2: 60000, rent_yen_per_m2_month: 180 },
+                { id: "広島", name: "広島", a_unit_yen_per_m2: { est: 439000, min: 408000, max: 470000 }, land_yen_per_m2: 80000, rent_yen_per_m2_month: 250 },
+                { id: "山口", name: "山口", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 35000, rent_yen_per_m2_month: 100 },
+                { id: "徳島", name: "徳島", a_unit_yen_per_m2: { est: 413000, min: 384000, max: 442000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "香川", name: "香川", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "愛媛", name: "愛媛", a_unit_yen_per_m2: { est: 417000, min: 388000, max: 446000 }, land_yen_per_m2: 45000, rent_yen_per_m2_month: 130 },
+                { id: "高知", name: "高知", a_unit_yen_per_m2: { est: 409000, min: 380000, max: 438000 }, land_yen_per_m2: 35000, rent_yen_per_m2_month: 100 },
+                { id: "福岡", name: "福岡", a_unit_yen_per_m2: { est: 456000, min: 424000, max: 488000 }, land_yen_per_m2: 100000, rent_yen_per_m2_month: 300 },
+                { id: "佐賀", name: "佐賀", a_unit_yen_per_m2: { est: 417000, min: 388000, max: 446000 }, land_yen_per_m2: 35000, rent_yen_per_m2_month: 100 },
+                { id: "長崎", name: "長崎", a_unit_yen_per_m2: { est: 417000, min: 388000, max: 446000 }, land_yen_per_m2: 45000, rent_yen_per_m2_month: 130 },
+                { id: "熊本", name: "熊本", a_unit_yen_per_m2: { est: 421000, min: 392000, max: 451000 }, land_yen_per_m2: 50000, rent_yen_per_m2_month: 150 },
+                { id: "大分", name: "大分", a_unit_yen_per_m2: { est: 413000, min: 384000, max: 442000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "宮崎", name: "宮崎", a_unit_yen_per_m2: { est: 409000, min: 380000, max: 438000 }, land_yen_per_m2: 35000, rent_yen_per_m2_month: 100 },
+                { id: "鹿児島", name: "鹿児島", a_unit_yen_per_m2: { est: 413000, min: 384000, max: 442000 }, land_yen_per_m2: 40000, rent_yen_per_m2_month: 120 },
+                { id: "沖縄", name: "沖縄", a_unit_yen_per_m2: { est: 439000, min: 408000, max: 470000 }, land_yen_per_m2: 80000, rent_yen_per_m2_month: 250 }
+            ],
+            switches: [
+                { category: "構造_詳細", option: "RC造（在来）", value: 1.07 },
+                { category: "構造_詳細", option: "S造（一般）", value: 1.0 },
+                { category: "構造_詳細", option: "木造（準耐火）", value: 0.95 },
+                { category: "構造_詳細", option: "SR造（SRC想定）", value: 1.09 }
+            ]
+        };
+
+        const COEF_PRESETS = {
+            tokuyo: { defaults:{ privateArea:13, buildingType:"apartment", rentableRatio:50, useFactor:1.35, commonFactor:1.05 }},
+            yuryo: { defaults:{ privateArea:18, buildingType:"apartment", rentableRatio:50, useFactor:1.25, commonFactor:1.00 }},
+            sakouju: { defaults:{ privateArea:18, buildingType:"roomcentric", rentableRatio:55, useFactor:1.15, commonFactor:0.95 }},
+            groupHome: { defaults:{ privateArea:13, buildingType:"roomcentric", rentableRatio:55, useFactor:1.20, commonFactor:1.00 }}
+        };
+
+        function applyFacilityPreset(){
+            const p=COEF_PRESETS[document.getElementById("facilityType").value]; if(!p) return;
+            setVal("privateAreaPreset", String(p.defaults.privateArea));
+            setVal("privateArea", p.defaults.privateArea);
+            document.getElementById("privateArea").disabled=true;
+            setVal("buildingType", p.defaults.buildingType);
+            setVal("rentable_ratio", p.defaults.rentableRatio);
+            setVal("useFactor", p.defaults.useFactor);
+            setVal("commonFactor", p.defaults.commonFactor);
+        }
+
+        function syncPrivateArea(){
+            const preset=document.getElementById("privateAreaPreset").value;
+            const input=document.getElementById("privateArea");
+            if(preset==="custom"){ input.disabled=false; } else { input.disabled=true; input.value=preset; }
+        }
+
+        function syncBuildingTypeToRatio(){
+            const map={ roomcentric:60, apartment:50, hotel:40 };
+            setVal("rentable_ratio", map[document.getElementById("buildingType").value]??50);
+        }
+
+        function calcFacilityToAreas(){
+            const plan=document.getElementById("roomPlan").value;
+            const residents=Math.max(0, num("residents"));
+            const privateArea=Math.max(10, num("privateArea"));
+            let multiRooms=Math.max(0, num("multiRooms"));
+            const bedsPerRoom=Number(document.getElementById("bedsPerRoom").value||4);
+            const multiAreaPerPerson=Number(document.getElementById("multiAreaPerPerson").value||8);
+            if(plan==="private_only"){ multiRooms=0; setVal("multiRooms",0); }
+            const multiBeds=multiRooms*bedsPerRoom;
+            const privateBeds=Math.max(0, residents-multiBeds);
+            const famRooms=Math.max(0, num("familyRooms"));
+            const famArea=Math.max(0, num("familyRoomArea"));
+            let netM2=(privateBeds*privateArea)+(multiBeds*multiAreaPerPerson)+(famRooms*famArea);
+            netM2*=Math.min(1.60, Math.max(0.70, num("commonFactor")||1.0));
+            const ratioPct=Math.min(70, Math.max(30, num("rentable_ratio")||50));
+            const gfa=(ratioPct>0)?(netM2/(ratioPct/100)):0;
+            setText("privateRoomsOut", privateBeds.toLocaleString("ja-JP"));
+            setText("multiBedsOut", multiBeds.toLocaleString("ja-JP"));
+            setText("net_m2_out", Math.round(netM2).toLocaleString("ja-JP"));
+            setText("gfa_m2_out", Math.round(gfa).toLocaleString("ja-JP"));
+            setVal("gfa_m2", Math.round(gfa));
+        }
+
+        // 階数係数（2階基準=1.00、6階以上で急上昇）
+        const FLOOR_FACTORS = {
+            1: 0.95,   // 平屋
+            2: 1.00,   // 基準
+            3: 1.08,
+            4: 1.15,
+            5: 1.22,
+            6: 1.32,   // 6階の壁（構造・消防）
+            7: 1.38,
+            8: 1.43,
+            9: 1.48,
+            10: 1.55
+        };
+
+        // 6階以上の追加費用（EV・防災設備）
+        function calcFloorAdditionalCost(floors, gfa){
+            let additional = 0;
+            if(floors >= 6){
+                // スプリンクラー・排煙・非常用発電等：㎡+15万円
+                additional += gfa * 150000;
+                // 非常用EV追加：約8000万円
+                additional += 80000000;
+            }
+            if(floors >= 3){
+                // EV基本（3階以上）：約5000万円/基
+                const evCount = floors >= 6 ? 2 : 1;
+                additional += evCount * 50000000;
+            }
+            return additional;
+        }
+
+        function calcBuildCost(){
+            const prefId=document.getElementById("pref").value;
+            const structureOpt=document.getElementById("structure").value;
+            const gfa=num("gfa_m2");
+            const idx=num("indexFactor")||1;
+            const use=num("useFactor")||1;
+            const floors=parseInt(document.getElementById("floors").value)||2;
+            const pref=buildData.prefectures.find(p=>p.id===prefId);
+            const baseEst=pref?.a_unit_yen_per_m2?.est??0;
+            const baseMin=pref?.a_unit_yen_per_m2?.min??baseEst;
+            const baseMax=pref?.a_unit_yen_per_m2?.max??baseEst;
+            const structSwitch=buildData.switches?.filter(s=>s.category==="構造_詳細").find(s=>s.option===structureOpt);
+            const structFactor=(typeof structSwitch?.value==="number")?structSwitch.value:1;
+            
+            // 階数係数を取得
+            const floorFactor = FLOOR_FACTORS[floors] || 1.00;
+            setText("floor_factor_out", floorFactor.toFixed(2));
+            
+            // 6階以上の追加費用
+            const additionalCost = calcFloorAdditionalCost(floors, gfa);
+            
+            // 単価に階数係数を反映
+            const effectiveUnitEst=baseEst*structFactor*floorFactor*idx*use;
+            const effectiveUnitMin=baseMin*structFactor*floorFactor*idx*use;
+            const effectiveUnitMax=baseMax*structFactor*floorFactor*idx*use;
+            setText("unit_cost", Math.round(effectiveUnitEst).toLocaleString("ja-JP"));
+            
+            // 建築費に追加費用を加算
+            state.build={
+                unit: effectiveUnitEst, 
+                min: gfa*effectiveUnitMin + additionalCost, 
+                max: gfa*effectiveUnitMax + additionalCost,
+                floorFactor: floorFactor,
+                additionalCost: additionalCost
+            };
+            setText("build_cost_range", yenRange(state.build.min, state.build.max));
+        }
+
+        // 万円単位に切り上げ
+        function roundToMan(n){ return Math.ceil(n / 10000) * 10000; }
+
+        // 土地価格・地代を自動計算（都道府県・延床面積連動）
+        function calcLandPriceAuto(){
+            const prefId = document.getElementById("pref").value;
+            const gfa = num("gfa_m2");
+            const floors = parseInt(document.getElementById("floors").value) || 2;
+            const mode = document.getElementById("landMode").value;
+            const pref = buildData.prefectures.find(p => p.id === prefId);
+            
+            // 建築面積 = 延床面積 / 階数
+            const buildingArea = gfa / floors;
+            // 敷地面積 = 建築面積 / 建蔽率（55%想定）+ 駐車場等余裕
+            // → 建築面積 × 1.8
+            const siteArea = buildingArea * 1.8;
+            
+            // 敷地面積・建築面積を表示
+            setText("site_area_out", Math.round(siteArea).toLocaleString("ja-JP"));
+            setText("building_area_out", Math.round(buildingArea).toLocaleString("ja-JP"));
+            state.siteArea = Math.round(siteArea);
+            state.buildingArea = Math.round(buildingArea);
+            
+            if(mode === "purchase"){
+                // 購入モード：土地価格を計算、地代は0、保証金・礼金も0
+                const landUnitPrice = pref?.land_yen_per_m2 || 50000;
+                const landPrice = roundToMan(siteArea * landUnitPrice);
+                setVal("land_price", landPrice);
+                setVal("ground_rent_month", 0);
+                setVal("deposit_months", 0);
+                setVal("key_months", 0);
+                state.landPrice = landPrice;
+            } else {
+                // 借地モード：土地価格は0、月額地代を計算、保証金は12ヶ月
+                const rentUnitPrice = pref?.rent_yen_per_m2_month || 150;
+                const groundRentMonth = roundToMan(siteArea * rentUnitPrice);
+                setVal("land_price", 0);
+                setVal("ground_rent_month", groundRentMonth);
+                setVal("deposit_months", 12);
+                setVal("key_months", 0);
+                state.landPrice = 0;
+            }
+        }
+
+        // 建築費その他を自動計算
+        function calcOtherCostsAuto(){
+            const buildMid = (state.build.min + state.build.max) / 2;
+            const residents = num("residents");
+            // 設計・管理費: 建築費の6%
+            setVal("designMgmt_net", roundToMan(buildMid * 0.06));
+            // 登記・士業等: 建築費の0.8%
+            setVal("registry_net", roundToMan(buildMid * 0.008));
+            // 予備費: 建築費の4%
+            setVal("contingency_net", roundToMan(buildMid * 0.04));
+            // リーシング: 入居者数 × 5万円（広告・仲介費用）
+            setVal("leasing_net", roundToMan(residents * 50000));
+        }
+
+        // 収入・費用を自動計算（NOI利回り6%基準）
+        function calcIncomeAuto(){
+            const residents = num("residents");
+            const landPrice = num("land_price");
+            const groundRentMonth = num("ground_rent_month");
+            const buildMid = (state.build.min + state.build.max) / 2;
+            const taxRate = num("taxRate") || 10;
+            const mode = document.getElementById("landMode").value;
+            
+            // 土地固都税: 購入時のみ土地価格の1%（年額）、借地時は0
+            const taxLand = (mode === "purchase") ? roundToMan(landPrice * 0.01) : 0;
+            setVal("tax_land_year", taxLand);
+            
+            // 建物固都税: 建築費の0.4%（年額・初年度目安）
+            const taxBldg = roundToMan(buildMid * 0.004);
+            setVal("tax_bldg_year", taxBldg);
+            
+            // 投資総額（税込）を概算
+            const autoOn = document.getElementById("landAuto").value === "auto";
+            const landFeesNet = (autoOn ? state.landFeesAuto : 0) + num("landFees_net");
+            const otherNet = num("designMgmt_net") + num("registry_net") + num("contingency_net") + num("leasing_net") + num("relocation_net");
+            const devTasksNet = (state.devTasksCost.min + state.devTasksCost.max) / 2;
+            const totalInvNet = landPrice + landFeesNet + buildMid + otherNet + devTasksNet;
+            const totalInvGross = totalInvNet * (1 + taxRate / 100);
+            
+            // NOI利回り6%基準で逆算
+            // 借地の場合は地代を年間経費に加算
+            // NOI = 年間収入 - 年間支出
+            // 年間支出 = 管理費×12 + 土地税 + 建物税 + 地代×12（借地時）
+            const groundRentYear = groundRentMonth * 12;
+            
+            const targetNOI = totalInvGross * 0.06;
+            // 賃料 = (目標NOI + 土地税 + 建物税 + 地代年額) / 12
+            const rentMonth = roundToMan((targetNOI + taxLand + taxBldg + groundRentYear) / 12);
+            setVal("rent_month", rentMonth);
+            
+            // その他収入: 賃料の8%（共益費・駐車場等）
+            setVal("other_month", roundToMan(rentMonth * 0.08));
+            
+            // 管理費: 賃料の8%
+            setVal("mgmt_month", roundToMan(rentMonth * 0.08));
+        }
+
+        function calcLandFeesAuto(){
+            const mode=document.getElementById("landMode").value;
+            if(document.getElementById("landAuto").value!=="auto"){ state.landFeesAuto=0; setVal("landFees_auto_net",0); return; }
+            const assessedRatio=num("assessedRatio")||0.7;
+            let fees=0;
+            if(mode==="purchase"){
+                const landPrice=num("land_price");
+                const brokerage=landPrice>0?(landPrice*0.03+60000):0;
+                const assessed=landPrice*assessedRatio;
+                fees=brokerage+(assessed*0.015)+(assessed*0.5*0.03)+Math.min(600000,150000+landPrice*0.001)+(300000+Math.max(0,num("gfa_m2"))*120)+(Math.max(0,num("gfa_m2"))*450*(num("siteWorkFactor")||1));
+            } else {
+                const groundRent=num("ground_rent_month");
+                fees=groundRent*(num("deposit_months")+num("key_months")+1)+50000;
+            }
+            state.landFeesAuto=Math.max(0,fees);
+            setVal("landFees_auto_net", Math.round(state.landFeesAuto));
+        }
+
+        function calcDevTasksCost(){
+            let min=0,max=0;
+            state.selectedTasks.forEach(id=>{
+                const r=devData.costRanges[id];
+                if(r){ min+=Number(r.min||0); max+=Number(r.max||0); }
+            });
+            state.devTasksCost={min,max};
+        }
+
+        function sumTax(net, taxRatePct){ const tax=net*(taxRatePct/100); return {net,tax,gross:net+tax}; }
+
+        function recalcSummary(){
+            const taxRate=num("taxRate");
+            const mode=document.getElementById("landMode").value;
+            const landPurchaseNet=(mode==="purchase")?num("land_price"):0;
+            const autoOn=document.getElementById("landAuto").value==="auto";
+            const landFeesNet=(autoOn?state.landFeesAuto:0)+num("landFees_net");
+            const landPurchase=sumTax(landPurchaseNet, taxRate);
+            const landFees=sumTax(landFeesNet, taxRate);
+            const buildMin=sumTax(state.build.min, taxRate);
+            const buildMax=sumTax(state.build.max, taxRate);
+            const otherNet=num("designMgmt_net")+num("registry_net")+num("contingency_net")+num("leasing_net")+num("relocation_net");
+            const other=sumTax(otherNet, taxRate);
+            const devMin=sumTax(state.devTasksCost.min, taxRate);
+            const devMax=sumTax(state.devTasksCost.max, taxRate);
+            const totalMin=landPurchase.gross+landFees.gross+buildMin.gross+other.gross+devMin.gross;
+            const totalMax=landPurchase.gross+landFees.gross+buildMax.gross+other.gross+devMax.gross;
+            setText("totalInv", yenRange(totalMin,totalMax));
+
+            const tbody=document.getElementById("summaryTable");
+            tbody.innerHTML="";
+            const addRow=(name,a,b=null)=>{
+                const tr=document.createElement("tr");
+                tr.innerHTML=b?`<td>${name}</td><td class="num">${yenRange(a.net,b.net)}</td><td class="num">${yenRange(a.gross,b.gross)}</td>`:`<td>${name}</td><td class="num">${yenShort(a.net)}</td><td class="num">${yenShort(a.gross)}</td>`;
+                tbody.appendChild(tr);
+            };
+            addRow(mode==="purchase"?"土地仕入":"土地（借地）", landPurchase);
+            addRow("土地関連費", landFees);
+            addRow("建築費", buildMin, buildMax);
+            addRow("建築その他", other);
+            addRow("開発作業", devMin, devMax);
+
+            const incomeY=(num("rent_month")+num("other_month"))*12;
+            const groundRentYear=num("ground_rent_month")*12;
+            const noiY=incomeY-(num("mgmt_month")*12)-groundRentYear-(num("tax_land_year")+num("tax_bldg_year"));
+            setText("noi_year", yenShort(noiY));
+            const invMid=(totalMin+totalMax)/2;
+            setText("gross_yield", (invMid>0?(incomeY/invMid*100):0).toFixed(2)+"%");
+            setText("noi_yield", (invMid>0?(noiY/invMid*100):0).toFixed(2)+"%");
+            state.summary={totalMin,totalMax,incomeY,noiY,grossYield:invMid>0?(incomeY/invMid*100):0,noiYield:invMid>0?(noiY/invMid*100):0};
+        }
+
+        function recalcAll(){
+            const plan=document.getElementById("roomPlan").value;
+            ["multiRooms","bedsPerRoom","multiAreaPerPerson"].forEach(id=>{ document.getElementById(id).disabled=(plan==="private_only"); });
+            syncPrivateArea();
+            calcFacilityToAreas();
+            calcBuildCost();
+            calcLandPriceAuto();   // 土地価格を自動計算
+            calcOtherCostsAuto();  // 建築費その他を自動計算
+            calcLandFeesAuto();    // 土地諸費用を計算
+            calcDevTasksCost();    // 開発作業費を計算
+            calcIncomeAuto();      // 収入・費用を自動計算（投資総額から逆算するため最後）
+            recalcSummary();
+        }
+
+        function renderFlow(){
+            const flow=document.getElementById("flow");
+            flow.innerHTML="";
+            devData.phases.forEach(p=>{
+                const div=document.createElement("div");
+                div.className="step";
+                div.innerHTML=`<strong>${p.id}.</strong> ${p.name}`;
+                flow.appendChild(div);
+            });
+        }
+
+        function renderPrefSelect(){
+            const sel=document.getElementById("pref");
+            sel.innerHTML="";
+            buildData.prefectures.filter(p=>p.id!=="全国平均").forEach(p=>{
+                const opt=document.createElement("option");
+                opt.value=p.id; opt.textContent=p.name;
+                sel.appendChild(opt);
+            });
+            // 東京23区をデフォルトに
+            if([...sel.options].some(o=>o.value==="東京23区")) sel.value="東京23区";
+            else if([...sel.options].some(o=>o.value==="東京（その他）")) sel.value="東京（その他）";
+            else if(sel.options.length>0) sel.selectedIndex=0;
+        }
+
+        function renderTasks(){
+            // A〜Cフェーズを4番に表示
+            const container=document.getElementById("tasksByPhase");
+            container.innerHTML="";
+            devData.phases.filter(p => p.id !== "D").forEach(phase=>{
+                const h=document.createElement("div");
+                h.className="phaseTitle";
+                h.innerHTML=`<span class="id">${phase.id}</span> ${phase.name}`;
+                container.appendChild(h);
+                const group=document.createElement("div");
+                group.className="tasks";
+                devData.tasks.filter(t=>t.phaseId===phase.id&&t.display).forEach(t=>{
+                    const r=devData.costRanges[t.id]||{min:0,max:0,note:""};
+                    const row=document.createElement("div");
+                    row.className="task";
+                    // C-02（什器備品選定）はリンク付き
+                    if(t.id === "C-02"){
+                        row.innerHTML=`<div class="left"><input type="checkbox" data-task="${t.id}" ${state.selectedTasks.has(t.id)?"checked":""}><div><a href="service-equipment.html?residents=${num('residents')}" class="name" style="color:var(--primary);text-decoration:underline;cursor:pointer;">${t.name} →</a><div class="desc">${t.description||""}</div></div></div><div class="range"><strong>${r.min===0&&r.max===0?"別途":yenRange(r.min,r.max)}</strong><span>${r.note||""}</span></div>`;
+                    } else {
+                        row.innerHTML=`<div class="left"><input type="checkbox" data-task="${t.id}" ${state.selectedTasks.has(t.id)?"checked":""}><div><div class="name">${t.name}</div><div class="desc">${t.description||""}</div></div></div><div class="range"><strong>${r.min===0&&r.max===0?"別途":yenRange(r.min,r.max)}</strong><span>${r.note||""}</span></div>`;
+                    }
+                    row.querySelector("input").addEventListener("change",(e)=>{
+                        if(e.target.checked) state.selectedTasks.add(t.id); else state.selectedTasks.delete(t.id);
+                        recalcAll();
+                    });
+                    group.appendChild(row);
+                });
+                container.appendChild(group);
+            });
+            
+            // Dフェーズ（開業準備）を5番に表示
+            const containerD=document.getElementById("tasksByPhaseD");
+            if(containerD){
+                containerD.innerHTML="";
+                const groupD=document.createElement("div");
+                groupD.className="tasks";
+                devData.tasks.filter(t=>t.phaseId==="D"&&t.display).forEach(t=>{
+                    const r=devData.costRanges[t.id]||{min:0,max:0,note:""};
+                    const row=document.createElement("div");
+                    row.className="task";
+                    row.innerHTML=`<div class="left"><input type="checkbox" data-task="${t.id}" ${state.selectedTasks.has(t.id)?"checked":""}><div><div class="name">${t.name}</div><div class="desc">${t.description||""}</div></div></div><div class="range"><strong>${r.min===0&&r.max===0?"別途":yenRange(r.min,r.max)}</strong><span>${r.note||""}</span></div>`;
+                    row.querySelector("input").addEventListener("change",(e)=>{
+                        if(e.target.checked) state.selectedTasks.add(t.id); else state.selectedTasks.delete(t.id);
+                        recalcAll();
+                    });
+                    groupD.appendChild(row);
+                });
+                containerD.appendChild(groupD);
+            }
+        }
+
+        // 什器備品は別ページ（service-equipment.html）に移動
+        function renderEquipment(){ /* no-op */ }
+        function calcEquipmentTotal(){ return 0; }
+
+        function bindInputs(){
+            const ids=["facilityType","residents","roomPlan","privateAreaPreset","privateArea","familyRooms","familyRoomArea","commonFactor","buildingType","rentable_ratio","useFactor","indexFactor","multiRooms","bedsPerRoom","multiAreaPerPerson","pref","structure","floors","gfa_m2","landMode","taxRate","landAuto","assessedRatio","land_price","ground_rent_month","siteWorkFactor","deposit_months","key_months","landFees_net","designMgmt_net","registry_net","contingency_net","leasing_net","relocation_net","rent_month","other_month","mgmt_month","tax_land_year","tax_bldg_year"];
+            ids.forEach(id=>{
+                const el=document.getElementById(id); if(!el) return;
+                el.addEventListener("input", ()=>{ if(id==="buildingType") syncBuildingTypeToRatio(); if(id==="facilityType") applyFacilityPreset(); if(id==="floors") updateFloorHint(); recalcAll(); });
+                el.addEventListener("change", ()=>{ if(id==="buildingType") syncBuildingTypeToRatio(); if(id==="facilityType") applyFacilityPreset(); if(id==="floors") updateFloorHint(); recalcAll(); });
+            });
+            document.getElementById("btnCalc").addEventListener("click", ()=>{ recalcAll(); alert("計算を実行しました"); });
+            document.getElementById("btnSave").addEventListener("click", ()=>{ localStorage.setItem("devSimulation", JSON.stringify(exportState())); alert("保存しました"); });
+            document.getElementById("btnToMember").addEventListener("click", ()=>{ localStorage.setItem("devSimulation", JSON.stringify(exportState())); location.href="estimate-development.html"; });
+        }
+
+        // 階数に応じたヒント表示
+        function updateFloorHint(){
+            const floors = parseInt(document.getElementById("floors").value) || 2;
+            const hint = document.getElementById("floorHint");
+            if(!hint) return;
+            
+            if(floors === 1){
+                hint.innerHTML = "💡 平屋：構造・設備がシンプルで最もコスト効率が良い。EV不要。";
+                hint.style.color = "#10b981";
+            } else if(floors <= 2){
+                hint.innerHTML = "💡 2階建て基準。木造・S造で対応可能。EV1基程度。";
+                hint.style.color = "";
+            } else if(floors <= 5){
+                hint.innerHTML = "💡 3〜5階：EV必須。躯体コスト上昇。S造/RC造推奨。";
+                hint.style.color = "#f59e0b";
+            } else {
+                hint.innerHTML = "⚠️ 6階以上：【構造の壁】柱・梁・基礎が大幅増。【消防の壁】スプリンクラー・排煙・非常用発電機が必須。【EVの壁】非常用EV追加。費用が大きく跳ねます。";
+                hint.style.color = "#ef4444";
+            }
+        }
+
+        function exportState(){
+            return {
+                version:"devSim_v6",
+                savedAt:new Date().toISOString(),
+                facility:{ facilityType:document.getElementById("facilityType").value, residents:num("residents"), roomPlan:document.getElementById("roomPlan").value, privateArea:num("privateArea"), familyRooms:num("familyRooms"), familyRoomArea:num("familyRoomArea"), commonFactor:num("commonFactor"), multiRooms:num("multiRooms"), bedsPerRoom:Number(document.getElementById("bedsPerRoom").value||4), multiAreaPerPerson:Number(document.getElementById("multiAreaPerPerson").value||8), buildingType:document.getElementById("buildingType").value, rentableRatio:num("rentable_ratio") },
+                inputs:{ pref:document.getElementById("pref").value, structure:document.getElementById("structure").value, floors:parseInt(document.getElementById("floors").value)||2, gfa_m2:num("gfa_m2"), useFactor:num("useFactor"), indexFactor:num("indexFactor"), taxRate:num("taxRate"), land:{ mode:document.getElementById("landMode").value, auto:document.getElementById("landAuto").value, assessedRatio:num("assessedRatio"), land_price:num("land_price"), ground_rent_month:num("ground_rent_month"), siteWorkFactor:num("siteWorkFactor"), deposit_months:num("deposit_months"), key_months:num("key_months"), landFees_manual_net:num("landFees_net"), landFees_auto_net:state.landFeesAuto }},
+                selectedTasks:Array.from(state.selectedTasks),
+                computed:{build:state.build, devTasksCost:state.devTasksCost, summary:state.summary}
+            };
+        }
+
+        (function init(){
+            // すべてインラインデータを使用（外部ファイル不要）
+            devData = DEV_DATA;
+            buildData = BUILD_DATA;
+            console.log("Data loaded:", buildData.prefectures.length, "prefectures");
+            renderFlow();
+            renderPrefSelect();
+            applyFacilityPreset();
+            syncBuildingTypeToRatio();
+            updateFloorHint();
+            renderTasks();
+            bindInputs();
+            recalcAll();
+            console.log("Init complete");
+        })();
+    </script>
+</body>
+</html>

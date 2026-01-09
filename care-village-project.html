@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人生の真ん中に、もう一度"村"をつくる｜LIVING CARE VILLAGE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: #fff;
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #E60012;
+        }
+        
+        .header-tag {
+            background: #E60012;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #E60012 0%, #C5000F 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .hero-sub {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Key Visual */
+        .key-visual {
+            margin: 0;
+        }
+        
+        .key-visual img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Funding Bar */
+        .funding-bar {
+            background: #fff;
+            padding: 30px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .funding-inner {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .funding-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .funding-main {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .funding-amount {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .funding-amount span {
+            font-size: 1.2rem;
+        }
+        
+        .funding-target {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e8e8e8;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #E60012;
+            border-radius: 6px;
+            width: 0%;
+            transition: width 1s ease;
+        }
+        
+        .progress-percent {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #E60012;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+        
+        .funding-meta {
+            display: flex;
+            gap: 40px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .funding-meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .funding-meta-label {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 3px;
+        }
+        
+        .funding-meta-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        /* TOC */
+        .toc {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 25px 30px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        
+        .toc-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .toc-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px 30px;
+        }
+        
+        .toc-item {
+            color: #E60012;
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 5px 0;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .toc-item:hover {
+            border-bottom-color: #E60012;
+        }
+        
+        /* Main Content */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-header {
+            margin-bottom: 30px;
+        }
+        
+        .section-label {
+            font-size: 0.8rem;
+            color: #E60012;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        /* Image */
+        .full-image {
+            margin: 30px 0;
+        }
+        
+        .full-image img {
+            width: 100%;
+            border-radius: 8px;
+            display: block;
+        }
+        
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .image-grid.three {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        
+        .image-grid img {
+            width: 100%;
+            border-radius: 8px;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        /* Concept Grid */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .concept-item {
+            background: #f8f8f8;
+            padding: 20px 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        /* Info Box */
+        .info-box {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .info-box h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        /* Red Box */
+        .red-box {
+            background: linear-gradient(135deg, #E60012 0%, #C5000F 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .red-box h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Village Card */
+        .village-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .village-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .village-card-content {
+            padding: 20px;
+        }
+        
+        .village-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .village-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 0;
+        }
+        
+        .village-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        /* Problem Cards */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .problem-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 25px;
+        }
+        
+        .problem-card h4 {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .problem-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .problem-card li {
+            font-size: 0.9rem;
+            color: #666;
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .problem-card li::before {
+            content: "・";
+            position: absolute;
+            left: 0;
+        }
+        
+        /* Budget Table */
+        .budget-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        
+        .budget-table th,
+        .budget-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .budget-table th {
+            background: #f8f8f8;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        
+        .budget-table .amount {
+            text-align: right;
+            font-weight: 700;
+            color: #E60012;
+        }
+        
+        .budget-table tfoot td {
+            background: #333;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .budget-table tfoot .amount {
+            color: white;
+        }
+        
+        /* Phase Item */
+        .phase-item {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        
+        .phase-item.highlight {
+            background: linear-gradient(135deg, #E60012 0%, #C5000F 100%);
+            color: white;
+        }
+        
+        .phase-percent {
+            background: white;
+            color: #E60012;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .phase-item.highlight .phase-percent {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .phase-percent span {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .phase-percent small {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+        
+        .phase-content h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .phase-content p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        /* Revenue Grid */
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .revenue-card {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .revenue-card h5 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .revenue-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #E60012;
+        }
+        
+        .revenue-card p {
+            font-size: 0.8rem;
+            color: #999;
+            margin: 5px 0 0;
+        }
+        
+        /* Goals Grid */
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .goal-item {
+            background: #f8f8f8;
+            padding: 25px 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .goal-item h5 {
+            font-size: 0.9rem;
+            color: #333;
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        /* Message Card */
+        .message-card {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 25px 0;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .message-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #E60012, #C5000F);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .message-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .message-role {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .message-text p {
+            margin-bottom: 15px;
+        }
+        
+        .message-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Note List */
+        .note-list p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        /* Support Menu */
+        .support-menu {
+            background: #f8f8f8;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 40px 0;
+        }
+        
+        .support-menu h3 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #E60012;
+        }
+        
+        .support-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .support-item:last-child {
+            border-bottom: none;
+        }
+        
+        .support-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #E60012;
+        }
+        
+        .support-desc {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            background: linear-gradient(135deg, #E60012 0%, #C5000F 100%);
+            color: white;
+            text-align: center;
+            padding: 18px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            margin: 30px 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(230, 0, 18, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.85rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.4rem;
+            }
+            
+            .funding-meta {
+                gap: 20px;
+            }
+            
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .concept-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .problem-grid,
+            .village-grid,
+            .revenue-grid,
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-grid.three {
+                grid-template-columns: 1fr;
+            }
+            
+            .phase-item {
+                flex-direction: column;
+            }
+            
+            .phase-percent {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .concept-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">LIVING CARE VILLAGE</div>
+            <span class="header-tag">PLANNING CF</span>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>人生の真ん中に、もう一度"村"をつくる。<br>医療と暮らしが溶け合う、新しい介護村</h1>
+        <p class="hero-sub">支えられる場所から、役割を取り戻す場所へ。断絶しない人生のための介護村プロジェクト</p>
+    </section>
+
+    <!-- Key Visual -->
+    <div class="key-visual">
+        <img src="mura2.jpg" alt="介護村コンセプトイメージ">
+    </div>
+
+    <!-- Funding Bar -->
+    <section class="funding-bar">
+        <div class="funding-inner">
+            <p class="funding-label">目標金額</p>
+            <div class="funding-main">
+                <div class="funding-amount" id="current-amount">0<span>円</span></div>
+                <div class="funding-target">/ 120億円</div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-percent" id="progress-percent">0%</div>
+            </div>
+            
+            <div class="funding-meta">
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">支援者数</span>
+                    <span class="funding-meta-value" id="supporters">0人</span>
+                </div>
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">残り日数</span>
+                    <span class="funding-meta-value" id="countdown">1,460日</span>
+                </div>
+                <div class="funding-meta-item">
+                    <span class="funding-meta-label">開始日</span>
+                    <span class="funding-meta-value">2026年2月1日</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOC -->
+    <div class="toc container">
+        <div class="toc-title">目次</div>
+        <div class="toc-list">
+            <a href="#about" class="toc-item">01 コンセプト</a>
+            <a href="#why" class="toc-item">02 なぜ介護村なのか</a>
+            <a href="#structure" class="toc-item">03 村の構成</a>
+            <a href="#budget" class="toc-item">04 開発費・運営費</a>
+            <a href="#phase" class="toc-item">05 フェーズ別建設計画</a>
+            <a href="#revenue" class="toc-item">06 収支モデル</a>
+            <a href="#goals" class="toc-item">07 目指すもの</a>
+            <a href="#message" class="toc-item">08 メッセージ</a>
+            <a href="#support" class="toc-item">09 支援メニュー</a>
+            <a href="#note" class="toc-item">10 ご留意事項</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Section: About -->
+        <section id="about" class="section">
+            <div class="section-header">
+                <p class="section-label">01 CONCEPT</p>
+                <h2 class="section-title">これは「施設開発」ではありません。</h2>
+            </div>
+            
+            <div class="red-box">
+                <p style="margin:0;">高齢者を「施設に入れる」のではなく、<br><strong>人生の続きを"村で生きる"</strong>という選択肢をつくる。<br>未来の暮らし方の実装プロジェクトです。</p>
+            </div>
+            
+            <div class="full-image">
+                <img src="jason-low-q9VZOCsyRlo-unsplash.jpg" alt="紅葉の中を歩く夫婦">
+            </div>
+            
+            <p>この介護村は、「部屋に住む」のではなく「村で暮らす」——そんな発想から生まれました。子どもも、大人も、高齢者も、みんなが集まる場所。季節の行事があり、仕事があり、役割がある。</p>
+            
+            <p><strong>人生の真ん中に、もう一度"村"をつくる</strong>プロジェクトです。</p>
+            
+            <h3 style="font-size: 1.1rem; margin: 30px 0 15px;">ひとつの小さな社会として、5つの要素が一体となった村</h3>
+            
+            <div class="concept-grid">
+                <div class="concept-item">住まい</div>
+                <div class="concept-item">医療・看護</div>
+                <div class="concept-item">食</div>
+                <div class="concept-item">仕事・役割</div>
+                <div class="concept-item">つながり</div>
+            </div>
+        </section>
+
+        <!-- Section: Why -->
+        <section id="why" class="section">
+            <div class="section-header">
+                <p class="section-label">02 WHY CARE VILLAGE</p>
+                <h2 class="section-title">なぜ今、介護村なのか</h2>
+            </div>
+            
+            <div class="full-image">
+                <img src="getty-images-sPg11D94eSM-unsplash.jpg" alt="日本庭園">
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h4>いまの介護の現実</h4>
+                    <ul>
+                        <li>分断されている</li>
+                        <li>管理されている</li>
+                        <li>「守ること」だけが目的になりがち</li>
+                        <li>人生の"終わり"を待つ場所になっている</li>
+                    </ul>
+                </div>
+                <div class="problem-card">
+                    <h4>本来の人間の姿</h4>
+                    <ul>
+                        <li>誰かと関わっている時が元気</li>
+                        <li>役割を持っている時が元気</li>
+                        <li>必要とされている時が元気</li>
+                        <li>生きている実感がある時が元気</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="red-box">
+                <p style="margin:0;">「介護される人を集める場所」ではなく、<br><strong>「人が集まる村の中に、介護と医療がある」</strong><br>という逆転の発想</p>
+            </div>
+        </section>
+
+        <!-- Section: Structure -->
+        <section id="structure" class="section">
+            <div class="section-header">
+                <p class="section-label">03 VILLAGE DESIGN</p>
+                <h2 class="section-title">介護村の構成</h2>
+            </div>
+            
+            <!-- 中央広場 -->
+            <div class="village-card">
+                <img src="joshua-earle-ZjmTlhnfpWU-unsplash__1_.jpg" alt="五重塔と灯り">
+                <div class="village-card-content">
+                    <h4>中央広場 ― 村の心臓</h4>
+                    <p>村の中心に象徴的な灯り（命の塔）。季節の行事、祭り、食事、イベント。子どもも、大人も、高齢者も集まる場所</p>
+                </div>
+            </div>
+            
+            <div class="village-grid">
+                <div class="village-card">
+                    <img src="natalia-blauth-2gJF6I0LByQ-unsplash.jpg" alt="木の温もりある住居">
+                    <div class="village-card-content">
+                        <h4>住まい</h4>
+                        <p>小規模・分散型の住居。「部屋」ではなく「家」。介護度が上がっても住み替え不要</p>
+                    </div>
+                </div>
+                <div class="village-card">
+                    <img src="niwa1.jpg" alt="日本庭園">
+                    <div class="village-card-content">
+                        <h4>ナーシングベース</h4>
+                        <p>24時間対応の看護・医療チーム。緊急時は"動く医療"。村で完結する医療</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="village-grid">
+                <div class="village-card">
+                    <img src="yasai2.jpg" alt="野菜市場">
+                    <div class="village-card-content">
+                        <h4>食堂・市場</h4>
+                        <p>村の食堂でみんなで食べる。季節の食材、地元の味。食を通じた交流の場</p>
+                    </div>
+                </div>
+                <div class="village-card">
+                    <img src="mura1.jpg" alt="夜の村">
+                    <div class="village-card-content">
+                        <h4>仕事・役割</h4>
+                        <p>軽作業・料理・畑・接客など「できること」を仕事に。収入ではなく「役割」を生む仕組み</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="image-grid three">
+                <img src="nroom1.jpg" alt="在宅ケア">
+                <img src="yasai2.jpg" alt="野菜市場">
+                <img src="niwa1.jpg" alt="日本庭園">
+            </div>
+        </section>
+
+        <!-- Section: Budget -->
+        <section id="budget" class="section">
+            <div class="section-header">
+                <p class="section-label">04 BUDGET</p>
+                <h2 class="section-title">総開発費 120億円</h2>
+            </div>
+            
+            <div class="info-box">
+                <h4>事業スケール前提</h4>
+                <p style="margin:0;">定員：<strong>180名</strong> ｜ 住居棟：<strong>15棟（1棟12名）</strong> ｜ 医療：<strong>ナーシングベース1棟</strong></p>
+            </div>
+            
+            <table class="budget-table">
+                <thead>
+                    <tr>
+                        <th>区分</th>
+                        <th class="amount">金額</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>土地・造成費</td>
+                        <td class="amount">20億円</td>
+                    </tr>
+                    <tr>
+                        <td>建築工事費</td>
+                        <td class="amount">65億円</td>
+                    </tr>
+                    <tr>
+                        <td>設備・什器・IT</td>
+                        <td class="amount">20億円</td>
+                    </tr>
+                    <tr>
+                        <td>開業準備・予備費</td>
+                        <td class="amount">15億円</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>合計</td>
+                        <td class="amount">120億円</td>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <h3 style="font-size: 1.1rem; margin: 40px 0 15px;">年間運営費 24億円</h3>
+            
+            <table class="budget-table">
+                <tbody>
+                    <tr>
+                        <td>人件費（看護師40名、介護職70名、医師、管理・調理30名）</td>
+                        <td class="amount">13.5億円</td>
+                    </tr>
+                    <tr>
+                        <td>医療・介護運営費</td>
+                        <td class="amount">4億円</td>
+                    </tr>
+                    <tr>
+                        <td>食・生活・村運営</td>
+                        <td class="amount">3億円</td>
+                    </tr>
+                    <tr>
+                        <td>建物維持・管理</td>
+                        <td class="amount">3.5億円</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section: Phase -->
+        <section id="phase" class="section">
+            <div class="section-header">
+                <p class="section-label">05 PHASE</p>
+                <h2 class="section-title">フェーズ別建設計画（建築工事費 65億円）</h2>
+            </div>
+            
+            <p>全Phaseを一度に実行せず、「到達した分だけ確実に前へ進む」段階型の実行設計です。</p>
+            
+            <div class="phase-item highlight">
+                <div class="phase-percent">
+                    <span>Phase 1</span>
+                    <small>21億円</small>
+                </div>
+                <div class="phase-content">
+                    <h4>基盤整備</h4>
+                    <p>ナーシングベース（10億）＋ 中央広場・象徴建築（5億）＋ 住居棟3棟（6億）<br>→ 成果：村の運営を開始できる状態を作る</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>Phase 2</span>
+                    <small>16億円</small>
+                </div>
+                <div class="phase-content">
+                    <h4>村の核形成</h4>
+                    <p>食堂・市場・商業棟（8億）＋ 住居棟4棟（8億）<br>→ 成果：村の賑わいが生まれる</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>Phase 3</span>
+                    <small>12億円</small>
+                </div>
+                <div class="phase-content">
+                    <h4>生活圏拡大</h4>
+                    <p>住居棟4棟（8億）＋ 管理・バックヤード棟（4億）<br>→ 成果：定員拡大、運営効率化</p>
+                </div>
+            </div>
+            
+            <div class="phase-item">
+                <div class="phase-percent">
+                    <span>Phase 4</span>
+                    <small>16億円</small>
+                </div>
+                <div class="phase-content">
+                    <h4>村の完成</h4>
+                    <p>住居棟4棟（8億）＋ 屋根付き回廊・共用動線（8億）<br>→ 成果：180名定員、介護村グランドオープン</p>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h4>段階的建設のメリット</h4>
+                <p style="margin:0;">Phase 1完成時点で村の運営を開始し、収益を得ながら次のPhaseへ。リスク分散と早期キャッシュフロー化を実現。</p>
+            </div>
+        </section>
+
+        <!-- Section: Revenue -->
+        <section id="revenue" class="section">
+            <div class="section-header">
+                <p class="section-label">06 REVENUE MODEL</p>
+                <h2 class="section-title">収支モデル ― 持続し、拡張できる構造</h2>
+            </div>
+            
+            <div class="revenue-grid">
+                <div class="revenue-card">
+                    <h5>介護保険・医療収入</h5>
+                    <div class="revenue-amount">17億円/年</div>
+                    <p>基盤となる安定収入</p>
+                </div>
+                <div class="revenue-card">
+                    <h5>住居・生活費</h5>
+                    <div class="revenue-amount">6.5億円/年</div>
+                    <p>入居費用・生活サービス</p>
+                </div>
+                <div class="revenue-card">
+                    <h5>商業・イベント・仕事</h5>
+                    <div class="revenue-amount">2.5億円/年</div>
+                    <p>市場、食堂、ワークショップ</p>
+                </div>
+                <div class="revenue-card">
+                    <h5>企業連携・寄付</h5>
+                    <div class="revenue-amount">1.5億円/年</div>
+                    <p>CSR、研究連携、寄付</p>
+                </div>
+            </div>
+            
+            <div class="red-box">
+                <h4>年間収入 27.5億円</h4>
+                <p style="margin:0;">年間黒字：約3.5億円（再投資前提）</p>
+            </div>
+        </section>
+
+        <!-- Section: Goals -->
+        <section id="goals" class="section">
+            <div class="section-header">
+                <p class="section-label">07 PROJECT GOALS</p>
+                <h2 class="section-title">このプロジェクトが目指すもの</h2>
+            </div>
+            
+            <div class="full-image">
+                <img src="getty-images-oJ-_Hp6kpFk-unsplash.jpg" alt="村の夕暮れ">
+            </div>
+            
+            <div class="goals-grid">
+                <div class="goal-item"><h5>孤独をなくす</h5></div>
+                <div class="goal-item"><h5>最期まで「自分でいる」<br>時間を伸ばす</h5></div>
+                <div class="goal-item"><h5>医療・介護の<br>コストを下げる</h5></div>
+                <div class="goal-item"><h5>家族の負担を減らす</h5></div>
+                <div class="goal-item"><h5>次世代に残せる<br>"モデル"をつくる</h5></div>
+            </div>
+            
+            <div class="red-box">
+                <h4>この村は「完成したら終わり」ではありません</h4>
+                <p style="margin:0;">完成した瞬間から、<strong>次の村を生むモデル</strong>になります。<br>初期投資 → 村をつくる → 運営 → 実証データを蓄積 → モデル化 → 全国・海外へ横展開</p>
+            </div>
+        </section>
+
+        <!-- Section: Message -->
+        <section id="message" class="section">
+            <div class="section-header">
+                <p class="section-label">08 MESSAGE</p>
+                <h2 class="section-title">プロジェクトメンバーからのメッセージ</h2>
+            </div>
+            
+            <div class="message-card">
+                <div class="message-header">
+                    <div class="message-avatar">T</div>
+                    <div>
+                        <div class="message-name">Tiger.J.Bob</div>
+                        <div class="message-role">TAmJ Inc. CEO / プロジェクト実行責任者</div>
+                    </div>
+                </div>
+                <div class="message-text">
+                    <p>「施設に入る」という言葉には、どこか人生が途切れるような響きがあります。でも本来、人は最期まで「誰かと関わり、役割を持って生きていたい」はず。</p>
+                    <p>私たちがつくりたいのは、介護の場所ではなく「暮らしの場所」。灯りが灯り、祭りがあり、仕事があり、笑い声がある。そんな<strong>「人生の続き」を生きられる村</strong>です。</p>
+                    <p style="margin:0;">皆様のご支援が、日本の介護のあり方を変える第一歩になります。共に、新しい未来を描いていきましょう。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Support -->
+        <section id="support" class="section">
+            <div class="section-header">
+                <p class="section-label">09 SUPPORT MENU</p>
+                <h2 class="section-title">支援メニュー</h2>
+            </div>
+            
+            <div class="support-menu">
+                <h3>リターン一覧</h3>
+                <div class="support-item">
+                    <div>
+                        <div class="support-amount">10,000円</div>
+                        <div class="support-desc">お礼メール＋活動報告レポート</div>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <div>
+                        <div class="support-amount">50,000円</div>
+                        <div class="support-desc">上記＋サポーターとしてお名前掲載</div>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <div>
+                        <div class="support-amount">100,000円</div>
+                        <div class="support-desc">上記＋介護村見学会ご招待</div>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <div>
+                        <div class="support-amount">500,000円</div>
+                        <div class="support-desc">上記＋プロジェクト報告会ご招待</div>
+                    </div>
+                </div>
+                <div class="support-item">
+                    <div>
+                        <div class="support-amount">1,000,000円</div>
+                        <div class="support-desc">上記＋村内にお名前プレート設置</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h4>TAmJ自社利益からの投資</h4>
+                <p style="margin:0;"><strong style="font-size: 1.3rem; color: #E60012;">5億円</strong>（4年間の事業利益を本プロジェクトに投資予定）</p>
+            </div>
+            
+            <a href="cf-contact.html" class="cta-button">このプロジェクトを支援する</a>
+        </section>
+
+        <!-- Section: Note -->
+        <section id="note" class="section">
+            <div class="section-header">
+                <p class="section-label">10 NOTE</p>
+                <h2 class="section-title">ご留意事項</h2>
+            </div>
+            
+            <div class="note-list">
+                <p>・本プロジェクトはAll in形式となり、目標金額に満たなかった場合でも、Phase実行設計に基づき段階的に実施いたします。</p>
+                <p>・ご支援完了時の「応援コメント」は、本プロジェクトのPRに利用させていただく場合があります。</p>
+                <p>・スケジュールは変動する場合がございます。その際は本ページを通じて、皆様にご連絡いたします。</p>
+                <p>・ご支援に関するご質問は、お問い合わせフォームよりご連絡ください。</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 LIVING CARE VILLAGE Project by TAmJ Inc. & NPO GO TO HAPPY LIFE. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Campaign settings
+        const startDate = new Date('2026-02-01');
+        const totalDays = 1460; // 4年
+        const endDate = new Date(startDate.getTime() + totalDays * 24 * 60 * 60 * 1000);
+        const today = new Date();
+        const targetAmount = 12000000000; // 120億円
+        
+        // Demo values
+        const currentAmount = 0;
+        const supporters = 0;
+        
+        // Calculate days remaining
+        let daysRemaining;
+        if (today < startDate) {
+            daysRemaining = totalDays;
+        } else if (today > endDate) {
+            daysRemaining = 0;
+        } else {
+            daysRemaining = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+        }
+        
+        // Calculate progress percentage
+        const progressPercent = Math.min(Math.round((currentAmount / targetAmount) * 100), 100);
+        
+        // Format number with commas
+        function formatNumber(num) {
+            return num.toLocaleString('ja-JP');
+        }
+        
+        // Update display
+        document.getElementById('countdown').textContent = formatNumber(daysRemaining) + '日';
+        document.getElementById('supporters').textContent = formatNumber(supporters) + '人';
+        document.getElementById('current-amount').innerHTML = formatNumber(currentAmount) + '<span>円</span>';
+        document.getElementById('progress-percent').textContent = progressPercent + '%';
+        
+        // Animate progress bar
+        setTimeout(() => {
+            document.getElementById('progress-fill').style.width = progressPercent + '%';
+            const percentLabel = document.getElementById('progress-percent');
+            if (progressPercent > 5) {
+                percentLabel.style.left = Math.min(progressPercent, 95) + '%';
+                percentLabel.style.transform = 'translate(-50%, -50%)';
+            }
+        }, 100);
+    </script>
+</body>
+</html>
